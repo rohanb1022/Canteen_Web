@@ -9,8 +9,7 @@ const List = ({ filter }) => {
   useEffect(() => {
     axios.get('http://localhost:5000/api/v1/view-orders') // Update the endpoint as per your backend
       .then(response => {
-        console.log(response);
-        
+        console.log('API Response:', response.data); // Log the entire response
         setOrders(response.data);
         setLoading(false);
       })
@@ -23,15 +22,15 @@ const List = ({ filter }) => {
 
   // Filter orders based on filter prop
   const filteredOrders = orders.filter(order => 
-    order.customer?.toLowerCase().includes(filter.toLowerCase()) ||
     order.status.toLowerCase().includes(filter.toLowerCase()) ||
-    order.foodItems.some(item => item.name.toLowerCase().includes(filter.toLowerCase()))
+    order.items.some(item => item.foodName.toLowerCase().includes(filter.toLowerCase()))
   );
 
   if (loading) return <div>Loading...</div>;
 
   if (error) return <div>{error}</div>;
-console.log(filteredOrders);
+
+  console.log('Filtered Orders:', filteredOrders); // Log filtered orders
 
   return (
     <div>
@@ -40,36 +39,44 @@ console.log(filteredOrders);
         <thead>
           <tr className="bg-gray-100">
             <th className="border border-gray-300 px-4 py-2">Order ID</th>
+            <th className="border border-gray-300 px-4 py-2">User  Name</th>
             <th className="border border-gray-300 px-4 py-2">Status</th>
             <th className="border border-gray-300 px-4 py-2">Total Amount</th>
-            <th className="border border-gray-300 px-4 py-2">Order Date</th>
             <th className="border border-gray-300 px-4 py-2">Food Items</th>
           </tr>
         </thead>
         <tbody>
-          {filteredOrders?.map(order => (
-            <tr key={order._id} className="hover:bg-gray-50">
-              <td className="border border-gray-300 px-4 py-2">{order._id}</td>
-              <td className="border border-gray-300 px-4 py-2">{order.status}</td>
-              <td className="border border-gray-300 px-4 py-2">${order.totalAmount}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                {new Date(order.orderDate).toLocaleString()}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                <ul className="list-disc list-inside">
-                  {order.foodItems?.map((item, index) => (
-                    <li key={index}>
-                      <strong>{item.name}</strong> - Qty: {item.quantity}, Price: ${item.price}
-                    </li>
-                  ))}
-                </ul>
-              </td>
+          {filteredOrders.length > 0 ? (
+            filteredOrders.map(order => (
+              <tr key={order.orderId} className="hover:bg-gray-50">
+                <td className="border border-gray-300 px-4 py-2">{order.orderId}</td>
+                <td className="border border-gray-300 px-4 py-2">{order.userName || 'Unknown User'}</td>
+                <td className="border border-gray-300 px-4 py-2">{order.status}</td>
+                <td className="border border-gray-300 px-4 py-2">${order.totalAmount}</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {order.items && order.items.length > 0 ? (
+                    <ul className="list-disc list-inside">
+                      {order.items.map((item, index) => (
+                        <li key={`${item.foodName}-${index}`}>
+                          <strong>{item.foodName}</strong> - Qty: {item.quantity}, Price: ${item.price}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span>No food items</span>
+                  )}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" className="border border-gray-300 px-4 py-2 text-center">No orders found</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>
-  ); 
+  );
 };
 
 export default List;

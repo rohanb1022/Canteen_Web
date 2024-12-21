@@ -47,7 +47,7 @@ const Sidebar = () => {
           </li>
           <li>
             <a
-              href="#"
+              href=""
               className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
             >
               <CubeIcon className="h-6 w-6 text-gray-500 mr-3" />

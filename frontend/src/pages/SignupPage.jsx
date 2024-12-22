@@ -30,7 +30,7 @@ const SignupPage = () => {
     if (success === true) {
       console.log("Form data submitted:", formData);
       signup(formData);
-      navigate("/"); // Navigate to homepage after successful signup
+      navigate("/home"); // Navigate to homepage after successful signup
     }
   };
 

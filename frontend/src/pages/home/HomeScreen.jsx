@@ -1,8 +1,9 @@
 
-const homePage = () => {
+
+const HomeScreen = () => {
   return (
-    <div>homePage</div>
+    <div>HomeScreen</div>
   )
 }
 
-export default homePage
+export default HomeScreen

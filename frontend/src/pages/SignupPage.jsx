@@ -1,19 +1,20 @@
-import {Eye , EyeOff } from "lucide-react"
+
 import {useRef , useState } from "react"
 import toast from "react-hot-toast"
-import {signup} from "useAuth"
+import {useAuthStore} from "../store/authUser"
+
 const SignupPage = () => {
+  const {signup} = useAuthStore() 
   const formRef = useRef(null);
   const [formData , setformData] = useState({
-    fullName : "",
+    username : "",
     email : "",
     password : ""
   })
-  const [showPassword, setshowPassword] = useState(false);
   
   
   const validateForm = () => {
-    if (!formData.fullName.trim()) return toast.error("Full name is required");
+    if (!formData.username.trim()) return toast.error("Full name is required");
     if (!formData.email.trim()) return toast.error("Email is required");
     if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
     if (!formData.password) return toast.error("Password is required");
@@ -40,7 +41,7 @@ const SignupPage = () => {
         <form onSubmit={handleSubmit} >
           <div className="mb-4">
             <label
-              htmlFor="name"
+              htmlFor="username"
               className="block text-sm font-medium text-orange-600"
             >
               Name
@@ -51,7 +52,7 @@ const SignupPage = () => {
               className="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
               placeholder="Enter your name"
               value={formData.fullName}
-              onClick={(e) => setformData({...formData , fullName : e.target.value})}
+              onChange={(e) => setformData({...formData , fullName : e.target.value})}
             />
           </div>
           <div className="mb-4">
@@ -67,7 +68,7 @@ const SignupPage = () => {
               className="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
               placeholder="Enter your email"
               value={formData.email}
-              onClick={(e) => setformData({...formData , email : e.target.value})}
+              onChange={(e) => setformData({...formData , email : e.target.value})}
             />
           </div>
           <div className="mb-6">
@@ -78,24 +79,13 @@ const SignupPage = () => {
               Password
             </label>
             <input
-              type={showPassword ? "text" : "password" }
+              type="password"
               id="password"
               className="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
               placeholder="Enter your password"
               value={formData.password}
-              onClick={(e) => setformData({...formData , password : e.target.value})}
+              onChange={(e) => setformData({...formData , password : e.target.value})}
             />
-            <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-[800px] mt-[148px] flex items-center"
-                  onClick={() => setshowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="size-5 text-base-content/40" />
-                  ) : (
-                    <Eye className="size-5 text-base-content/40 " />
-                  )}
-                </button>
           </div>
           <button
             type="submit"

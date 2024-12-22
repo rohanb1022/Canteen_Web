@@ -55,19 +55,7 @@ const List = ({ filter }) => {
                 <td className="border border-gray-300 px-4 py-2">{order.status}</td>
                 <td className="border border-gray-300 px-4 py-2">${order.totalAmount}</td>
                 <td className="border border-gray-300 px-4 py-2">{order.phoneNumber}</td>
-                {/* <td className="border border-gray-300 px-4 py-2">
-                  {order.items && order.items.length > 0 ? (
-                    <ul className="list-disc list-inside">
-                      {order.items.map((item, index) => (
-                        <li key={`${item.foodName}-${index}`}>
-                          <strong>{item.foodName}</strong> - Qty: {item.quantity}, Price: ${item.price}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <span>No food items</span>
-                  )}
-                </td> */}
+                
               </tr>
             ))
           ) : (

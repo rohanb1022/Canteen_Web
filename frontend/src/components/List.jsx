@@ -7,7 +7,7 @@ const List = ({ filter }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/v1/view-orders') // Update the endpoint as per your backend
+    axios.get('http://localhost:5000/api/v1/order-history') // Update the endpoint as per your backend
       .then(response => {
         console.log('API Response:', response.data); // Log the entire response
         setOrders(response.data);
@@ -43,18 +43,19 @@ const List = ({ filter }) => {
             <th className="border border-gray-300 px-4 py-2">User  Name</th>
             <th className="border border-gray-300 px-4 py-2">Status</th>
             <th className="border border-gray-300 px-4 py-2">Total Amount</th>
-            <th className="border border-gray-300 px-4 py-2">Food Items</th>
+            <th className="border border-gray-300 px-4 py-2">Phone Number</th>
           </tr>
         </thead>
         <tbody>
           {filteredOrders.length > 0 ? (
             filteredOrders.map(order => (
-              <tr key={order.orderId} className="hover:bg-gray-50">
-                <td className="border border-gray-300 px-4 py-2">{order.orderId}</td>
+              <tr key={order.orderNo} className="hover:bg-gray-50">
+                <td className="border border-gray-300 px-4 py-2">{order.orderNo}</td>
                 <td className="border border-gray-300 px-4 py-2">{order.userName || 'Unknown User'}</td>
                 <td className="border border-gray-300 px-4 py-2">{order.status}</td>
                 <td className="border border-gray-300 px-4 py-2">${order.totalAmount}</td>
-                <td className="border border-gray-300 px-4 py-2">
+                <td className="border border-gray-300 px-4 py-2">{order.phoneNumber}</td>
+                {/* <td className="border border-gray-300 px-4 py-2">
                   {order.items && order.items.length > 0 ? (
                     <ul className="list-disc list-inside">
                       {order.items.map((item, index) => (
@@ -66,7 +67,7 @@ const List = ({ filter }) => {
                   ) : (
                     <span>No food items</span>
                   )}
-                </td>
+                </td> */}
               </tr>
             ))
           ) : (

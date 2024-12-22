@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
 
 const userSchema =mongoose.Schema({
-    username:{
+    fullname:{
         type:String,
         required:true,
-        unique:true,
     },
     email:{
         type:String,
@@ -14,15 +13,7 @@ const userSchema =mongoose.Schema({
     password:{
         type:String,
         required:true
-    },
-    Image:{
-        type:String,
-        default:""
-    },
-    searchHistory:{
-        type:Array,
-        default:[]
-    },
+    }, 
 })
 
  export const User=mongoose.model('User',userSchema);

@@ -22,7 +22,7 @@ const __dirname = path.resolve();
 
 // Configure CORS with proper settings
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your frontend's URL
+  origin: '*', // allowing both app and website to connect with backend,make sure to change it to allowed origins during producn.
   credentials: true, // Allow credentials (cookies, authorization headers)
 }));
 

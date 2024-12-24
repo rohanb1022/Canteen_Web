@@ -26,8 +26,10 @@ const LoginPage = () => {
     const success = validateForm();
     if (success === true) {
       const loginSuccess = await login(formData); // Validate login
+      console.log("Login success:", loginSuccess);
       if (loginSuccess) {
         toast.success("Login successful");
+        
         navigate("/home"); // Navigate to homepage upon success
       } else {
         toast.error("Invalid email or password");

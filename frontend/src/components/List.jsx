@@ -7,7 +7,7 @@ const List = ({ filter }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/v1/view-orders') // Update the endpoint as per your backend
+    axios.get('http://localhost:5000/api/v1/order-history') // Update the endpoint as per your backend
       .then(response => {
         console.log('API Response:', response.data); // Log the entire response
         setOrders(response.data);
@@ -31,51 +31,54 @@ const List = ({ filter }) => {
   if (error) return <div>{error}</div>;
 
   console.log('Filtered Orders:', filteredOrders); // Log filtered orders
- 
- 
+
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">Order List</h2>
-      <table className="min-w-full border-collapse border border-gray-200">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2">Order ID</th>
-            <th className="border border-gray-300 px-4 py-2">User  Name</th>
-            <th className="border border-gray-300 px-4 py-2">Status</th>
-            <th className="border border-gray-300 px-4 py-2">Total Amount</th>
-            <th className="border border-gray-300 px-4 py-2">Food Items</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredOrders.length > 0 ? (
-            filteredOrders.map(order => (
-              <tr key={order.orderId} className="hover:bg-gray-50">
-                <td className="border border-gray-300 px-4 py-2">{order.orderId}</td>
-                <td className="border border-gray-300 px-4 py-2">{order.userName || 'Unknown User'}</td>
-                <td className="border border-gray-300 px-4 py-2">{order.status}</td>
-                <td className="border border-gray-300 px-4 py-2">${order.totalAmount}</td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {order.items && order.items.length > 0 ? (
-                    <ul className="list-disc list-inside">
-                      {order.items.map((item, index) => (
-                        <li key={`${item.foodName}-${index}`}>
-                          <strong>{item.foodName}</strong> - Qty: {item.quantity}, Price: ${item.price}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <span>No food items</span>
-                  )}
+    <div className="bg-white shadow-md rounded-lg p-4">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Order List</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3 border-b">Order ID</th>
+              <th scope="col" className="px-6 py-3 border-b">User Name</th>
+              <th scope="col" className="px-6 py-3 border-b">Status</th>
+              <th scope="col" className="px-6 py-3 border-b">Total Amount</th>
+              <th scope="col" className="px-6 py-3 border-b">Phone Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredOrders.length > 0 ? (
+              filteredOrders.map(order => (
+                <tr key={order.orderNo} className="bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700">
+                  <td className="px-6 py-4 border-b">{order.orderNo}</td>
+                  <td className="px-6 py-4 border-b">{order.userName || 'Unknown User'}</td>
+                  <td className="px-6 py-4 border-b">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                        order.status === 'Delivered'
+                          ? 'bg-green-100 text-green-700'
+                          : order.status === 'Prepared'
+                          ? 'bg-blue-100 text-blue-700'
+                          : 'bg-red-100 text-red-700'
+                      }`}
+                    >
+                      {order.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 border-b">${order.totalAmount}</td>
+                  <td className="px-6 py-4 border-b">{order.phoneNumber}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
+                  No orders found
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5" className="border border-gray-300 px-4 py-2 text-center">No orders found</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

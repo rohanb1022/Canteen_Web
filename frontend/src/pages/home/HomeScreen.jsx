@@ -4,14 +4,15 @@ import Sidebar from "../../components/Sidebar";
 const HomeScreen = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [orders, setOrders] = useState([
-    { id: 356, items: [{ name: "Baked Pasted Dishes", price: 2.48, qty: 1 }, { name: "Chinese Takeout Dish", price: 5.3, qty: 1 }], showRedButton: true },
+    { id: 356, items: [{ name: "Sandwitch", price: 2.48, qty: 1 }, { name: "Chinese Takeout Dish", price: 5.3, qty: 1 }], showRedButton: true },
     { id: 388, items: [{ name: "Baked Pasted Dishes", price: 2.48, qty: 1 }, { name: "Chinese Takeout Dish", price: 5.3, qty: 1 }], showRedButton: true },
     { id: 475, items: [{ name: "Baked Pasted Dishes", price: 2.48, qty: 1 }, { name: "Chinese Takeout Dish", price: 5.3, qty: 1 }], showRedButton: true },
     { id: 66, items: [{ name: "Baked Pasted Dishes", price: 2.48, qty: 1 }, { name: "Chinese Takeout Dish", price: 5.3, qty: 1 }], showRedButton: true },
     { id: 52, items: [{ name: "Baked Pasted Dishes", price: 2.48, qty: 1 }, { name: "Chinese Takeout Dish", price: 5.3, qty: 1 }], showRedButton: true },
     { id: 874, items: [{ name: "Baked Pasted Dishes", price: 2.48, qty: 1 }, { name: "Chinese Takeout Dish", price: 5.3, qty: 1 }], showRedButton: true },
   ]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   const menuItems = [
     "Fried Rice",
@@ -26,44 +27,43 @@ const HomeScreen = () => {
     "Manchurian",
   ];
 
-  const handleDelete = (isRed) => {
-    let newIndex = currentIndex + 1;
-
-    // If we are at the last index, we loop back to the beginning
-    if (newIndex >= orders.length) {
-      newIndex = 0;
-    }
-
-    if (isRed) {
-      setOrders((prevOrders) => prevOrders.filter((_, idx) => idx !== currentIndex));
-    }
-
-    setCurrentIndex(newIndex);
+  const handleDelete = (index) => {
+    setOrders((prevOrders) => prevOrders.filter((_, i) => i !== index));
   };
 
   const handleOrangeButtonClick = (index) => {
     setOrders((prevOrders) =>
-      prevOrders.map((order, idx) =>
-        idx === index ? { ...order, showRedButton: false } : order
+      prevOrders.map((order, i) =>
+        i === index ? { ...order, showRedButton: false } : order
       )
     );
   };
+
+  const filteredMenuItems = menuItems.filter((item) =>
+    item.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="flex h-screen bg-gradient-to-b from-orange-100 via-orange-200 to-orange-300 relative">
       {/* Sidebar */}
       {isSidebarOpen && (
-        <div className="absolute inset-0 z-20">
+        <div className="absolute inset-0 z-50 bg-gray-800 bg-opacity-50">
           <Sidebar />
+          <button
+            className="absolute top-4 right-4 text-white bg-red-500 px-4 py-2 rounded-lg shadow-lg hover:bg-red-600"
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            Close
+          </button>
         </div>
       )}
 
       {/* Main Content */}
       <div className="flex-grow flex">
-        {/* Dropdown and Search Section */}
+        {/* Sidebar and Search Section */}
         <div className="w-1/5 bg-gradient-to-b from-orange-100 via-orange-200 to-orange-300 shadow-lg p-4">
           <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            onClick={() => setIsSidebarOpen(true)}
             className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none mb-4"
           >
             Menu
@@ -71,10 +71,12 @@ const HomeScreen = () => {
           <input
             type="text"
             className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Search"
+            placeholder="Search menu items..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <ul className="space-y-5">
-            {menuItems.map((item, index) => (
+            {filteredMenuItems.map((item, index) => (
               <li
                 key={index}
                 className="flex justify-between items-center p-2 bg-gray-100 rounded-lg shadow-sm hover:bg-gray-200"
@@ -88,8 +90,8 @@ const HomeScreen = () => {
         {/* Orders Section */}
         <main className="flex-grow p-4 grid grid-cols-3 gap-4 overflow-y-auto">
           {orders.map((order, index) => (
-            <div key={order.id} className="bg-white rounded-lg shadow-lg p-4 relative">
-              <p className="text-gray-500 text-sm mb-2">05 Feb 2023, 08:28 PM</p>
+            <div key={order.id} className="bg-white rounded-lg shadow-lg p-6 relative">
+              <p className="text-gray-500 text-sm mb-4">05 Feb 2023, 08:28 PM</p>
               {order.items.map((item, idx) => (
                 <div key={idx} className="flex items-center mb-6">
                   <img
@@ -106,24 +108,24 @@ const HomeScreen = () => {
               ))}
               <div className="absolute bottom-4 right-4 flex space-x-2">
                 <button
-                  className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600"
-                  onClick={() => handleDelete(false)}
+                  className="bg-green-500 text-white p-3 rounded-full hover:bg-green-600"
+                  onClick={() => handleDelete(index)}
                 >
                   ✔
                 </button>
                 <button
-                  className={`bg-red-500 text-white p-2 rounded-full hover:bg-red-600 ${
+                  className={`bg-red-500 text-white p-3 rounded-full hover:bg-red-600 ${
                     order.showRedButton ? "block" : "hidden"
                   }`}
-                  onClick={() => handleDelete(true)}
+                  onClick={() => handleDelete(index)}
                 >
                   ✖
                 </button>
                 <button
-                  className="bg-orange-500 text-white p-2 rounded-full hover:bg-orange-600"
+                  className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600"
                   onClick={() => handleOrangeButtonClick(index)}
                 >
-                  🔧
+                  ✔
                 </button>
               </div>
               <p className="absolute bottom-4 left-4 text-gray-500 font-bold">#{order.id}</p>

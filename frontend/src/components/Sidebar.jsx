@@ -20,7 +20,7 @@ const Sidebar = () => {
         <ul className="space-y-2">
           <li>
             <a
-              href="#"
+              href="/home"
               className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
             >
               <HomeIcon className="h-6 w-6 text-orange-500 mr-3" />
@@ -29,7 +29,7 @@ const Sidebar = () => {
           </li>
           <li>
             <a
-              href="#"
+              href="list"
               className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
             >
               <ClockIcon className="h-6 w-6 text-gray-500 mr-3" />
@@ -38,7 +38,7 @@ const Sidebar = () => {
           </li>
           <li>
             <a
-              href="#"
+              href="stats"
               className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
             >
               <ChartBarIcon className="h-6 w-6 text-gray-500 mr-3" />
@@ -47,7 +47,7 @@ const Sidebar = () => {
           </li>
           <li>
             <a
-              href=""
+              href="/products"
               className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
             >
               <CubeIcon className="h-6 w-6 text-gray-500 mr-3" />

@@ -24,60 +24,36 @@ const Sidebar = () => {
       <nav className="mt-6 flex-1">
         <ul className="space-y-2">
           <li>
-<<<<<<< HEAD
-            <a
-              href="/home"
-              className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
-=======
             <button
               onClick={() => navigate("/home")}
               className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
->>>>>>> 275ac68c70006669d3db9d41e519e468efc6187e
             >
               <HomeIcon className="h-6 w-6 text-orange-500 mr-3" />
               <span>Home</span>
             </button>
           </li>
           <li>
-<<<<<<< HEAD
-            <a
-              href="list"
-              className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
-=======
             <button
               onClick={() => navigate("/list")}
               className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
->>>>>>> 275ac68c70006669d3db9d41e519e468efc6187e
             >
               <ClockIcon className="h-6 w-6 text-gray-500 mr-3" />
               <span>Order List / History</span>
             </button>
           </li>
           <li>
-<<<<<<< HEAD
-            <a
-              href="stats"
-              className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
-=======
             <button
               onClick={() => navigate("/statistics")}
               className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
->>>>>>> 275ac68c70006669d3db9d41e519e468efc6187e
             >
               <ChartBarIcon className="h-6 w-6 text-gray-500 mr-3" />
               <span>Statistics</span>
             </button>
           </li>
           <li>
-<<<<<<< HEAD
-            <a
-              href="/products"
-              className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
-=======
             <button
               onClick={() => navigate("/products")}
               className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
->>>>>>> 275ac68c70006669d3db9d41e519e468efc6187e
             >
               <CubeIcon className="h-6 w-6 text-gray-500 mr-3" />
               <span>Products</span>

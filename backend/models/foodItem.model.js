@@ -1,6 +1,6 @@
+
 import mongoose from 'mongoose';
 
-// Define the schema for the FoodItem model
 const foodItemSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -15,22 +15,21 @@ const foodItemSchema = new mongoose.Schema({
     required: false
   },
   availability: {
-    type: Boolean,  // Can be a boolean to indicate availability (true/false)
+    type: Boolean,
     required: true,
-    default: true   // Default to true if no value is provided
+    default: true
   },
   stock: {
-    type: Number,  // If you'd like to manage stock quantity
+    type: Number,
     required: false,
     default: 0
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+  img: {
+    type: String,  // This field will store the image URL or path
+    required: false
+  },
 });
 
-// Prevent overwriting the model if it already exists
 const FoodItem = mongoose.model('FoodItem', foodItemSchema);
 
 export default FoodItem;

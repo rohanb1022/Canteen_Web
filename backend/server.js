@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import cors from 'cors';
 
+
 import authRoutes from './routes/auth.route.js';
 import { ENV_VARS } from './config/envVars.js';
 import { connectDB } from './config/db.js';
@@ -10,6 +11,7 @@ import protectRoute from './middleware/protectRoute.js';
 import viewOrderRoutes from './routes/viewOrder.route.js';
 import statisticsRoutes from './routes/statistics.route.js';
 import orderHistoryRoutes from './routes/ordersHistory.route.js';
+import productRoutes from './routes/products.route.js';
 
 // Test routes
 import orderRoutes from './routes/test/order.route.js';
@@ -34,7 +36,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use('/api/v1', statisticsRoutes);
 app.use('/api/v1', viewOrderRoutes); 
 app.use('/api/v1', orderHistoryRoutes);
-
+app.use('/api/v1', productRoutes);
 // Test routes
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);

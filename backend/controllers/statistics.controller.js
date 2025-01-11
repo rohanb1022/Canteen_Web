@@ -5,17 +5,18 @@ export const getStatistics = async (req, res) => {
     // Total number of orders
     const totalOrders = await Order.countDocuments();
 
-    // Total revenue
+    // Total revenue from completed orders
     const totalRevenue = await Order.aggregate([
+      { $match: { status: 'completed' } },  // Filter for completed orders
       { $group: { _id: null, total: { $sum: '$totalAmount' } } }
     ]);
 
     // Number of completed orders
-    const completedOrders = await Order.countDocuments({ status: 'Completed' });
+    const completedOrders = await Order.countDocuments({ status: 'completed' });
 
     res.json({
       totalOrders,
-      totalRevenue: totalRevenue[0]?.total || 0,
+      totalRevenue: totalRevenue[0]?.total || 0,  // Return total revenue if available, else 0
       completedOrders
     });
   } catch (error) {

@@ -5,6 +5,8 @@ import Orderlist from "./pages/orderList"
 import HomeScreen from "./pages/home/HomeScreen"
 import LoginPage from "./pages/login"
 import Products from "./pages/products"
+import Stats from "./components/Stats"
+import Statistics from "./pages/statistics"
 import toast, { Toaster } from "react-hot-toast"; // Import Toaster
 
 const App = () => {
@@ -19,7 +21,7 @@ const App = () => {
           <Route path="/home" element={<HomeScreen />}/>
           <Route path="/list" element={<Orderlist />}/>
           <Route path="/product" element={<Products />}/>
-
+          <Route path="/statistics" element={<Statistics />} />
           
           
         </Routes>

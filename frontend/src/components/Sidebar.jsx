@@ -1,5 +1,5 @@
 // components/Sidebar.jsx
-import React from "react";
+
 import { useNavigate } from "react-router-dom";
 import { HomeIcon, ClockIcon, ChartBarIcon, CubeIcon, LogoutIcon } from "@heroicons/react/outline";
 import logo from "../assets/Collegelogo.png";
@@ -52,7 +52,7 @@ const Sidebar = () => {
           </li>
           <li>
             <button
-              onClick={() => navigate("/products")}
+              onClick={() => navigate("/product")}
               className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
             >
               <CubeIcon className="h-6 w-6 text-gray-500 mr-3" />

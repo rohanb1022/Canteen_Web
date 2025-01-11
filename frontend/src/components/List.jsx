@@ -43,7 +43,7 @@ const List = ({ filter }) => {
               <th scope="col" className="px-6 py-3 border-b">User Name</th>
               <th scope="col" className="px-6 py-3 border-b">Status</th>
               <th scope="col" className="px-6 py-3 border-b">Total Amount</th>
-              <th scope="col" className="px-6 py-3 border-b">Phone Number</th>
+              <th scope="col" className="px-6 py-3 border-b">Email</th>
             </tr>
           </thead>
           <tbody>
@@ -55,7 +55,7 @@ const List = ({ filter }) => {
                   <td className="px-6 py-4 border-b">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        order.status === 'Delivered'
+                        order.status === 'completed'
                           ? 'bg-green-100 text-green-700'
                           : order.status === 'pending'
                           ? 'bg-yellow-100 text-yellow-700'
@@ -66,7 +66,7 @@ const List = ({ filter }) => {
                     </span>
                   </td>
                   <td className="px-6 py-4 border-b">${order.totalAmount}</td>
-                  <td className="px-6 py-4 border-b">{order.phoneNumber}</td>
+                  <td className="px-6 py-4 border-b">{order.email}</td>
                 </tr>
               ))
             ) : (

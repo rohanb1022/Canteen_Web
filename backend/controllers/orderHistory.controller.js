@@ -3,9 +3,9 @@ import AppUser from '../models/appuser.model.js';  // Changed from User to AppUs
 
 export const getOrderHistory = async (req, res) => {
   try {
-    // Fetch orders and populate user details (username and phone number)
+    // Fetch orders and populate user details (username and email)
     const orders = await Order.find()
-      .populate('userId', 'username phoneNumber')  // Populate user details: username and phoneNumber
+      .populate('userId', 'username email')  // Populate user details: username and email
       .sort({ orderDate: -1 });  // Sort orders by order date (newest first)
 
     // Map the fetched orders to include order number, status, user info, and totalAmount
@@ -16,7 +16,7 @@ export const getOrderHistory = async (req, res) => {
           orderNo: order._id,  // Use order ID as the order number
           status: order.status,  // Order status (pending, completed, cancelled)
           userName: 'N/A',  // Default if no userId
-          phoneNumber: 'N/A',  // Default if no userId
+          email: 'N/A',  // Default if no userId
           totalAmount: order.totalAmount,  // Total amount of the order
           createdAt: order.orderDate  // The date when the order was placed
         };
@@ -26,7 +26,7 @@ export const getOrderHistory = async (req, res) => {
         orderNo: order._id,  // Use order ID as the order number
         status: order.status,  // Order status (pending, completed, cancelled)
         userName: order.userId.username,  // User's username
-        phoneNumber: order.userId.phoneNumber,  // User's phone number
+        email: order.userId.email,  // User's email
         totalAmount: order.totalAmount,  // Total amount of the order
         createdAt: order.orderDate  // The date when the order was placed
       };

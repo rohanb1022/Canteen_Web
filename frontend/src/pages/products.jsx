@@ -1,11 +1,90 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import Sidebar from "../components/Sidebar";
 
 const Products = () => {
   const [dishes, setDishes] = useState([
-    { id: 1, name: "Biryani", price: 8.99, img: "https://via.placeholder.com/150" },
-    { id: 2, name: "Pasta", price: 7.49, img: "https://via.placeholder.com/150" },
-    { id: 3, name: "Noodles", price: 6.99, img: "https://via.placeholder.com/150" },
+    
+  { id: 1, name: "Tea Full", price: 15, img: "https://www.sharmispassions.com/wp-content/uploads/2012/12/cardamom-tea4.jpg" },
+  { id: 2, name: "Coffee", price: 15, img: "https://thecircleofaroma.in/cdn/shop/files/picture-steaming-cup-coffee-perfect-coffee-lovers-can-be-used-illustrate-concept-cozy-morning-caffeine-addiction-warm-beverage.jpg?v=1719467884&width=3840" },
+  //{ id: 3, name: "Lassi", price: 20, img: "https://via.placeholder.com/150" },
+  //{ id: 4, name: "Dahi", price: 20, img: "https://via.placeholder.com/150" },
+  { id: 6, name: "Poha", price: 20, img: "https://vegecravings.com/wp-content/uploads/2016/12/Aloo-Poha-Recipe-Step-By-Step-Instructions-scaled.jpg" },
+  //{ id: 7, name: "Upma", price: 20, img: "https://via.placeholder.com/150" },
+  { id: 8, name: "Vadapav", price: 15, img: "https://www.cookwithmanali.com/wp-content/uploads/2018/04/Vada-Pav-500x375.jpg" },
+  { id: 9, name: "Samosa", price: 17, img: "https://thumbs.dreamstime.com/b/fresh-delicious-crispy-samosa-isolated-white-220143505.jpg" },
+  { id: 10, name: "Chinese Samosa", price: 20, img: "https://www.cubesnjuliennes.com/wp-content/uploads/2018/08/chinese-samosaa-recipe.jpg" },
+  //{ id: 11, name: "Chole Samosa", price: 20, img: "https://via.placeholder.com/150" },
+  //{ id: 12, name: "Dahi Kachori", price: 20, img: "https://via.placeholder.com/150" },
+  { id: 13, name: "Chole Bhature", price: 50, img: "https://i.ytimg.com/vi/wAv-mFU7eus/maxresdefault.jpg" },
+  { id: 16, name: "Misal Pav", price: 35, img: "https://www.robinage.com/wp-content/uploads/2023/09/Misal.jpg" },
+  { id: 17, name: "Sabudana Vada", price: 20, img: "https://www.indianhealthyrecipes.com/wp-content/uploads/2021/06/sabudana-vada-recipe.jpg" },
+  { id: 18, name: "Bread Pakoda", price: 15, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpdIWj_jzX_L7KgHCnvN8GKj3RGp1HNpN4DQ&s" },
+  //{ id: 19, name: "French Fries", price: 35, img: "https://via.placeholder.com/150" },
+  { id: 20, name: "Veg Frankie", price: 20, img: "https://cdn.tarladalal.com/members/9306/procstepimgs/veg-frankie-(32)-7-187537.jpg" },
+  //{ id: 21, name: "Chocolate", price: 2, img: "" },
+  //{ id: 22, name: "Biscuits", price: 10, img: "" },
+  //{ id: 23, name: "Maggi", price: 20, img: "" },
+  //{ id: 24, name: "Ice Cream", price: 20, img: "https://via.placeholder.com/150" },
+  //{ id: 25, name: "Beverages", price: 20, img: "https://via.placeholder.com/150" },
+
+  // South Indian Dish
+  { id: 26, name: "Idli Samber", price: 30, img: "https://vaya.in/recipes/wp-content/uploads/2018/02/Idli-and-Sambar-1.jpg" },
+  { id: 27, name: "Medu Vada", price: 35, img: "https://vaya.in/recipes/wp-content/uploads/2018/02/Medu-Vada.jpg" },
+  { id: 28, name: "Idli Vada Sambhar", price: 35, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvupuRWAQnnJhjcf9KZoQKYKepqxRlLhQdUw&s" },
+  //{ id: 29, name: "Sadha Dosa", price: 45, img: "" },
+  //{ id: 30, name: "Masala Dosa", price: 50, img: "" },
+  //{ id: 31, name: "Mysore Sada", price: 50, img: "https://via.placeholder.com/150" },
+  //{ id: 32, name: "Mysore Masala", price: 60, img: "https://via.placeholder.com/150" },
+  //{ id: 33, name: "Chinese Dosa", price: 55, img: "https://via.placeholder.com/150" },
+  //{ id: 34, name: "Onion Uttappa", price: 40, img: "https://via.placeholder.com/150" },
+  //{ id: 35, name: "Mini Uttappa", price: 40, img: "https://via.placeholder.com/150" },
+  //{ id: 36, name: "Uttappa", price: 40, img: "https://via.placeholder.com/150" },
+
+  // Chinese
+  { id: 37, name: "Fried Rice", price: 50, img: "https://fullofplants.com/wp-content/uploads/2020/05/sweet-and-sour-spicy-thai-fried-rice-easy-vegan-meal-with-vegetables-thumb-500x500.jpg" },
+  { id: 38, name: "Hakka Noodles", price: 55, img: "https://www.ohmyveg.co.uk/wp-content/uploads/2024/08/hakka-noodles-720x720.jpg" },
+  { id: 39, name: "Schezwan Fried Rice", price: 55, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPgHRL5vv09iTTcD1SsDsre1nWiFdBIHiMdA&s" },
+  { id: 40, name: "Schezwan Noodles", price: 55, img: "https://www.cookwithmanali.com/wp-content/uploads/2021/08/Schezwan-Noodles-500x500.jpg" },
+  { id: 41, name: "Egg Fried Rice", price: 55, img: "https://savvybites.co.uk/wp-content/uploads/2024/02/Easy-Egg-fried-rice-2.jpg" },
+  { id: 42, name: "Egg Noodles", price: 55, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpDz4-GZI5EPxY_2Q-d_HnCANSJ42Cf6EFWg&s" },
+  { id: 43, name: "Egg Schezwan Fried Rice", price: 55, img: "https://images.slurrp.com/prod/recipe_images/whiskaffair/spicy-indo-chinese-schezwan-egg-fried-rice-recipe-1617380322_SNFD3JE3HW8A5KXCW3JI.webp" },
+  { id: 44, name: "Egg Schezwan Noodles", price: 55, img: "https://www.sharmispassions.com/wp-content/uploads/2012/01/EggNoodles3-500x500.jpg" },
+  { id: 45, name: "Triple Schezwan Rice", price: 65, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQRLIyDHmYmsAhkCvtDWKUow5wORxruJgD3w&s" },
+  //{ id: 46, name: "Veg Manchurian", price: 60, img: "" },
+  //{ id: 47, name: "Tomato Soup", price: 40, img: "https://via.placeholder.com/150" },
+  //{ id: 48, name: "Paneer Chilly", price: 120, img: "https://via.placeholder.com/150" },
+  { id: 49, name: "Chinese Bhel", price: 20, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTg4zSxCYDpnnZNL3s2OLG4Y8Jom51kCD27Q&s" },
+
+  // Sandwiches
+  { id: 50, name: "Veg Sandwich", price: 23, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv4EKY1TGqIxv_ERvFIXz7oG7ICvAQi0QdEQ&s" },
+  //{ id: 51, name: "Veg Toast Sandwich", price: 35, img: "" },
+  //{ id: 52, name: "Veg Grilled Sandwich", price: 35, img: "" },
+  //{ id: 54, name: "Egg Omlette Sandwich", price: 35, img: "https://via.placeholder.com/150" },
+  //{ id: 55, name: "Bread Butter", price: 25, img: "https://via.placeholder.com/150" },
+  //{ id: 56, name: "Bread Butter Toast", price: 35, img: "https://via.placeholder.com/150" },
+  { id: 57, name: "Cheese Chilly Grilled", price: 35, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTKNC5yNAgTSCzKUywePL1v3S-Ja9qytkkhw&s" },
+  //{ id: 58, name: "Bread Butter Jam", price: 20, img: "https://via.placeholder.com/150" },
+  //{ id: 59, name: "Bread Butter Jam Toast", price: 20, img: "https://via.placeholder.com/150" },
+  //{ id: 60, name: "Samosa Sandwich", price: 20, img: "https://via.placeholder.com/150" },
+  //{ id: 61, name: "Club Sandwich with Cheese", price: 20, img: "https://via.placeholder.com/150" },
+  //{ id: 62, name: "Pizza", price: 20, img: "https://via.placeholder.com/150" },
+
+  // Lunch
+  { id: 63, name: "Regualar thali", price: 100, img: "https://media.vyaparify.com/vcards/products/679/IMG-20230601-WA0006.jpg" },
+  //{ id: 64, name: "Mini Lunch", price: 55, img: "https://via.placeholder.com/150" },
+  { id: 65, name: "Veg Biryani", price: 60, img: "https://www.indianhealthyrecipes.com/wp-content/uploads/2021/09/veg-biryani-vegetable-biryani.jpg" },
+  { id: 66, name: "Veg Pulav", price: 50, img: "https://www.indianhealthyrecipes.com/wp-content/uploads/2018/07/pulao-recipe.jpg" },
+  { id: 67, name: "Dal Rice", price: 40, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHIEnKPsNPAE9EwAdDJUGpaEcrZF16p7bqVQ&s" },
+  //{ id: 68, name: "Dal Khichdi", price: 20, img: "" },
+  //{ id: 69, name: "Paneer Sabzi", price: 60, img: "" },
+  //{ id: 70, name: "Puri Bhaji", price: 40, img: "" },
+  //{ id: 71, name: "Puri Plate", price: 20, img: "" },
+  { id: 72, name: "Chapati", price: 15, img: "https://sandhyahariharan.co.uk/wp-content/uploads/2022/09/chapati_-500x500.jpg" },
+  //{ id: 73, name: "Curd Rice", price: 45, img: "" },
+  { id: 74, name: "Plain Rice", price: 35, img: "https://www.mississippivegan.com/wp-content/uploads/2021/12/easy-baked-rice-02-819x1024.jpg" },
+  //{ id: 75, name: "Lemon Rice", price: 20, img: "https://via.placeholder.com/150" }
+
+
   ]);
   const [editingNameId, setEditingNameId] = useState(null);
 
@@ -47,7 +126,7 @@ const Products = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow p-8">
+      <div className="overflow-y-auto flex-grow p-8">
         {/* Add Dish Button */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-700">Menu Management</h1>

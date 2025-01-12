@@ -24,9 +24,18 @@ const __dirname = path.resolve();
 
 // Configure CORS with proper settings
 app.use(cors({
-  origin: '*', // allowing both app and website to connect with backend,make sure to change it to allowed origins during producn.
+  origin: (origin, callback) => {
+    const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', '*']; // Add specific origins and '*'
+    
+    if (!origin || allowedOrigins.includes(origin) || origin === '*') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true, // Allow credentials (cookies, authorization headers)
 }));
+
 
 app.use(express.json());
 app.use(cookieParser());

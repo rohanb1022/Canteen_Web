@@ -28,6 +28,14 @@ const foodItemSchema = new mongoose.Schema({
     type: String,  // This field will store the image URL or path
     required: false
   },
+  rating: {
+    type: Number,
+    required: false
+  },
+  category: {
+    type: String,
+    required: true,
+  }
 });
 
 const FoodItem = mongoose.model('FoodItem', foodItemSchema);

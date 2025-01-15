@@ -16,7 +16,8 @@ import productRoutes from './routes/products.route.js';
 // Test routes
 import orderRoutes from './routes/test/order.route.js';
 import userRoutes from './routes/test/user.route.js';
-import foodItemRoutes from './routes/test/fooditem.route.js';
+// import foodItemRoutes from './routes/test/fooditem.route.js';
+import FoodItemroutes from './routes/FoodItem.route.js';
 
 const app = express();
 const PORT = ENV_VARS.PORT;
@@ -46,10 +47,12 @@ app.use('/api/v1', statisticsRoutes);
 app.use('/api/v1', viewOrderRoutes); 
 app.use('/api/v1', orderHistoryRoutes);
 app.use('/api/v1', productRoutes);
+
+// app.use('/api/v1', foodItemRoutes);
 // Test routes
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/fooditems', foodItemRoutes);
+app.use('/api', FoodItemroutes);
 
 app.listen(PORT, () => {
   console.log('Server started at http://localhost:' + PORT);

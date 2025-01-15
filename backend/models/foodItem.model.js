@@ -30,11 +30,13 @@ const foodItemSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: false
+    required: false,
+    default: 0
   },
   category: {
     type: String,
     required: true,
+    default: "uncategorized",
   }
 });
 

@@ -19,6 +19,10 @@ import userRoutes from './routes/test/user.route.js';
 // import foodItemRoutes from './routes/test/fooditem.route.js';
 import FoodItemroutes from './routes/FoodItem.route.js';
 
+import Profile from './routes/profile.route.js';
+
+import payment from './routes/payment.route.js';
+
 const app = express();
 const PORT = ENV_VARS.PORT;
 const __dirname = path.resolve();
@@ -53,6 +57,10 @@ app.use('/api/v1', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api', FoodItemroutes);
+
+app.use('/api/v1' , Profile);
+
+app.use('/api/v1' , payment);
 
 app.listen(PORT, () => {
   console.log('Server started at http://localhost:' + PORT);

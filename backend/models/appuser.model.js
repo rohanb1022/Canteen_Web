@@ -8,7 +8,7 @@ const AppUserSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    required: true
+    required: false
   },
   email: {
     type: String,
@@ -24,7 +24,5 @@ const AppUserSchema = new mongoose.Schema({
   }
 });
 
-// Prevent overwriting the model if it already exists
 const AppUser = mongoose.models.AppUser || mongoose.model('AppUser', AppUserSchema);
-
 export default AppUser;

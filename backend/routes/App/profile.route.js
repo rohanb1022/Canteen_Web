@@ -1,10 +1,11 @@
 import express from 'express';
 import AppUser from '../../models/appuser.model.js';
+import protectRoute from '../../middleware/App/protectRoute.js';
 
 const router = express.Router();
 
 
-router.get('/profile/:id', async (req, res) => {
+router.get('/profile/:id', protectRoute , async (req, res) => {
     try {
       // Assuming you have some way to get the current user's ID
       const userId = req.user.id;

@@ -1,5 +1,6 @@
 import express from 'express';
 import FoodItem from '../../models/foodItem.model.js'; // Assuming you have a FoodItem model
+import protectRoute from '../../middleware/App/protectRoute.js';
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ const router = express.Router();
 // });
 
 // Get individual food item details
-router.get('/fooditem/:id', async (req, res) => {
+router.get('/fooditem/:id',protectRoute ,  async (req, res) => {
   try {
     const foodItem = await FoodItem.findById(req.params.id, 'image price rating name description');
     if (!foodItem) return res.status(404).json({ message: 'Food item not found' });

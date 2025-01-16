@@ -1,5 +1,5 @@
 import express from 'express';
-import { getFoodItems , addFoodItem , updateProductAvailability} from '../controllers/products.controller.js'; 
+import { getFoodItems , addFoodItem , updateProductAvailability} from '../../controllers/products.controller.js'; 
 const router = express.Router();
 
 // Route for fetching  in products

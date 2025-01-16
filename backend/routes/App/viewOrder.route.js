@@ -1,5 +1,5 @@
 import express from 'express';
-import { getOrderCards } from '../controllers/orders.controller.js'; 
+import { getOrderCards } from '../../controllers/orders.controller.js'; 
 const router = express.Router();
 
 // Route for fetching orders in card format

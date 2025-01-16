@@ -47,7 +47,7 @@ export async function signup(req, res) {
         });
 
         // Generating token and setting cookie
-        generateTokenAndSetCookie(newUser._id, res);
+        const re =generateTokenAndSetCookie(newUser._id, res);
         
         // Saving the new user to the database
         await newUser.save();
@@ -57,6 +57,7 @@ export async function signup(req, res) {
             success: true,
             user: {
                 ...newUser._doc,
+                re,
                 password: "" // Omit password from response
             }
         });

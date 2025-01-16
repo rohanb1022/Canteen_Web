@@ -52,12 +52,12 @@ app.use('/api/v1', statisticsRoutes);
 
 // app routes
 app.use("/app/api/v1/auth" , appAuthRoutes)
-app.use('app/api/v1', viewOrderRoutes); //
-app.use('app/api/v1', orderHistoryRoutes);//
-app.use('app/api/v1', productRoutes);//
-app.use('app/api/v1' , appProfileRoutes);//
-app.use('app/api/v1' , appPaymentRoutes);//
-app.use("app/api/v1" , fooditemRoutes)
+app.use('/app/api/v1', viewOrderRoutes); //
+app.use('/app/api/v1', orderHistoryRoutes);//
+app.use('/app/api/v1', productRoutes);//
+app.use('/app/api/v1' , appProfileRoutes);//
+app.use('/app/api/v1' , appPaymentRoutes);//
+app.use("/app/api/v1" , fooditemRoutes)
 
 // app.use('/api/v1', foodItemRoutes);
 // Test routes

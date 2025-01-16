@@ -1,6 +1,6 @@
-import AppUser  from '../models/appuser.model.js';
+import AppUser  from '../../models/appuser.model.js';
 import bcryptjs from 'bcryptjs';
-import { generateTokenAndSetCookie } from '../utils/generateTokens.js';
+import { generateTokenAndSetCookie } from '../../utils/generateTokens.js';
 
 
 export async function signup(req, res) {

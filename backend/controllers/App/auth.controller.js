@@ -47,7 +47,7 @@ export async function signup(req, res) {
         });
 
         // Generating token and setting cookie
-        const re =generateTokenAndSetCookie(newUser._id, res);
+        generateTokenAndSetCookie(newUser._id, res);
         
         // Saving the new user to the database
         await newUser.save();
@@ -57,7 +57,6 @@ export async function signup(req, res) {
             success: true,
             user: {
                 ...newUser._doc,
-                re,
                 password: "" // Omit password from response
             }
         });
@@ -90,13 +89,14 @@ export async function login(req, res) {
         }
 
         // Generating token and setting cookie
-        generateTokenAndSetCookie(user._id, res);
+        const re=generateTokenAndSetCookie(user._id, res);
 
         // Responding with user data (password omitted)
         res.status(200).json({
             success: true,
             user: {
                 ...user._doc,
+                re,
                 password: "" // Omit password from response
             }
         });
@@ -110,7 +110,7 @@ export async function login(req, res) {
 export async function logout(req, res) {
     try {
         // Clearing the authentication cookie
-        res.clearCookie("jwt-netflix");
+        res.clearCookie("jwt-canteen");
         res.status(200).json({ success: true, message: "Logged out successfully" });
     } catch (error) {
         console.log("Error in logout controller:", error.message);

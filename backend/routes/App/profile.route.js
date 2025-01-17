@@ -17,4 +17,33 @@ router.get('/profile', protectRoute , async (req, res) => {
   }
 });
 
+// PUT profile route for updating user details
+router.put('/profile', protectRoute, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { username, email } = req.body;
+
+    // Validate the fields
+    if (!username || !email) {
+    return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    // Find the user and update the details
+    const updatedUser = await AppUser.findByIdAndUpdate(
+    userId,
+    { username , email },
+    { new: true, runValidators: true } // Return the updated user and validate
+);
+
+  if (!updatedUser) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  res.json({ message: 'Profile updated successfully', user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+  
+});
+
 export default router;

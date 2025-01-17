@@ -4,7 +4,10 @@ import AppUser from '../../models/appuser.model.js';
 
 const protectRoute = async (req, res, next) => {
     try {
-        const token = req.cookies["jwt-canteen"];
+        const authHeader = req.headers["authorization"];
+
+  //Extracting token from authorization header
+        const token = authHeader && authHeader.split(" ")[1];
 
         if (!token) {
             console.warn("No token provided in request");

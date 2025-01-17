@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/fooditem', async (req, res) => {
   try {
     const foodItems = await FoodItem.find({}, 'img rating name category price');
-    console.log("Fetched food items:", foodItems); // Updated log message
+    
     res.status(200).json({
       success: true,
       data: foodItems,

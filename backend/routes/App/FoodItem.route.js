@@ -26,9 +26,10 @@ router.get('/fooditem', async (req, res) => {
 // Get individual food item details
 router.get('/fooditem/:id',protectRoute ,  async (req, res) => {
   try {
-    const foodItem = await FoodItem.findById(req.params.id, 'image price rating name description');
+    const foodItem = await FoodItem.findById(req.params.id, 'img price rating name description');
     if (!foodItem) return res.status(404).json({ message: 'Food item not found' });
     res.json(foodItem);
+    console.log("data sent: ",foodItem);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

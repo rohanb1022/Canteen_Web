@@ -5,10 +5,10 @@ import { generateTokenAndSetCookie } from '../../utils/generateTokens.js';
 
 export async function signup(req, res) {
     try {
-        const { email, password, username } = req.body;
+        const { email, password, username, phoneNumber } = req.body;
 
         // Validation checks
-        if (!email || !password || !username) {
+        if (!email || !password || !username || !phoneNumber) {
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
 
@@ -23,6 +23,11 @@ export async function signup(req, res) {
             return res.status(400).json({ success: false, message: "Password should be at least 6 characters" });
         }
 
+        // Phone number length check
+        if (phoneNumber.length < 10) {
+            return res.status(400).json({ success: false, message: "Phone number should be 10 digits" });
+        }
+
         // Check if email already exists
         const existingUserByEmail = await AppUser.findOne({ email: email });
         if (existingUserByEmail) {
@@ -35,6 +40,12 @@ export async function signup(req, res) {
             return res.status(400).json({ success: false, message: "Username already exists" });
         }
 
+        // Check if phone number already exists
+        const existingUserByPhoneNumber = await AppUser.findOne({ phoneNumber: phoneNumber });
+        if (existingUserByPhoneNumber) {
+            return res.status(400).json({ success: false, message: "Phone number already exists" });
+        }
+
         // Hashing the password
         const salt = await bcryptjs.genSalt(10);
         const hashedPassword = await bcryptjs.hash(password, salt);
@@ -44,6 +55,7 @@ export async function signup(req, res) {
             email: email,
             password: hashedPassword,
             username: username,
+            phoneNumber: phoneNumber
         });
 
         // Generating token and setting cookie

@@ -21,17 +21,17 @@ router.get('/profile', protectRoute , async (req, res) => {
 router.put('/profile', protectRoute, async (req, res) => {
   try {
     const userId = req.user.id;
-    const { username, email } = req.body;
+    const { username, email , phoneNumber } = req.body;
 
     // Validate the fields
-    if (!username || !email) {
+    if (!username || !email || !phoneNumber) {
     return res.status(400).json({ message: 'All fields are required' });
     }
 
     // Find the user and update the details
     const updatedUser = await AppUser.findByIdAndUpdate(
     userId,
-    { username , email },
+    { username , email, phoneNumber },
     { new: true, runValidators: true } // Return the updated user and validate
 );
 

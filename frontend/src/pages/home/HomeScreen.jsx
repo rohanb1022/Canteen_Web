@@ -8,6 +8,7 @@ function HomeScreen() {
   const [orders, setOrders] = useState([]);
   const [foodItemsSummary, setFoodItemsSummary] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [highlightedOrders, setHighlightedOrders] = useState({});
 
   // Fetch orders and summarize food items
   useEffect(() => {
@@ -16,7 +17,7 @@ function HomeScreen() {
       .then((response) => {
         if (response.data) {
           setOrders(response.data);
-  
+
           const summary = {};
           response.data.forEach((order) => {
             order.items.forEach((item) => {
@@ -32,18 +33,29 @@ function HomeScreen() {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-  
+
   // Filtered orders based on the search query
-  const filteredOrders = orders.filter(order =>
-    order.items.some(item =>
+  const filteredOrders = orders.filter((order) =>
+    order.items.some((item) =>
       item.foodName.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
 
   // Handlers for order actions
-  const handleComplete = (orderId) => console.log(`Order ${orderId} marked as complete`);
-  const handleCancel = (orderId) => console.log(`Order ${orderId} canceled`);
-  const handlePending = (orderId) => console.log(`Order ${orderId} marked as pending`);
+  const handleComplete = (orderId) =>
+    console.log(`Order ${orderId} marked as complete`);
+  const handleCancel = (orderId) =>
+    console.log(`Order ${orderId} canceled`);
+  const handlePending = (orderId) =>
+    console.log(`Order ${orderId} marked as pending`);
+
+  // Highlight a specific card
+  const handleHighlight = (orderId) => {
+    setHighlightedOrders((prev) => ({
+      ...prev,
+      [orderId]: !prev[orderId],
+    }));
+  };
 
   return (
     <div className="flex h-screen">
@@ -90,11 +102,17 @@ function HomeScreen() {
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
                 <OrderCard
-                  key={order.orderId}  // Unique key for each order
+                  key={order.orderId}
                   order={order}
                   onComplete={() => handleComplete(order.orderId)}
-                  onCancel={() => handleCancel(order.orderId)}
+                  onCancel={
+                    highlightedOrders[order.orderId]
+                      ? null
+                      : () => handleCancel(order.orderId)
+                  }
                   onPending={() => handlePending(order.orderId)}
+                  isHighlighted={highlightedOrders[order.orderId]}
+                  onHighlight={() => handleHighlight(order.orderId)}
                 />
               ))
             ) : (

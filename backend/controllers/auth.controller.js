@@ -1,4 +1,4 @@
-import AppUser  from '../models/appuser.model.js';
+import {User} from '../models/user.model.js';
 import bcryptjs from 'bcryptjs';
 import { generateTokenAndSetCookie } from '../utils/generateTokens.js';
 
@@ -23,13 +23,13 @@ export async function signup(req, res) {
         }
 
         // Check if email already exists
-        const existingUserByEmail = await AppUser.findOne({ email: email });
+        const existingUserByEmail = await User.findOne({ email: email });
         if (existingUserByEmail) {
             return res.status(400).json({ success: false, message: "Email already exists" });
         }
 
         // Check if username already exists
-        const existingUserByUsername = await AppUser.findOne({ username: username });
+        const existingUserByUsername = await User.findOne({ username: username });
         if (existingUserByUsername) {
             return res.status(400).json({ success: false, message: "Username already exists" });
         }
@@ -39,7 +39,7 @@ export async function signup(req, res) {
         const hashedPassword = await bcryptjs.hash(password, salt);
 
         // Creating a new user without the Image field
-        const newUser = new AppUser({
+        const newUser = new User({
             email: email,
             password: hashedPassword,
             username: username,
@@ -76,7 +76,7 @@ export async function login(req, res) {
         }
 
         // Find user by email
-        const user = await AppUser.findOne({ email: email });
+        const user = await User.findOne({ email: email });
         if (!user) {
             return res.status(404).json({ success: false, message: "Invalid credentials" });
         }

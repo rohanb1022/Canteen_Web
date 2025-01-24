@@ -12,6 +12,7 @@ import { connectDB } from './config/db.js';
 import webStatisticsRoutes from './routes/statistics.route.js';
 import webProductRoutes from './routes/products.route.js';
 import webOrderHistoryRoutes from "./routes/orderHistory.route.js"
+import webViewOrderRoutes from "./routes/viewOrder.route.js"
 
 //App routes
 import viewOrderRoutes from './routes/App/viewOrder.route.js';
@@ -55,6 +56,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use('/api/v1', webStatisticsRoutes);
 app.use("/api/v1" , webOrderHistoryRoutes)
 app.use("/api/v1" ,webProductRoutes )
+app.use("/api/v1" ,webViewOrderRoutes )
 // app routes
 app.use("/app/api/v1/auth" , appAuthRoutes)
 app.use('/app/api/v1', viewOrderRoutes); //

@@ -7,7 +7,10 @@ import cors from 'cors';
 import authRoutes from './routes/auth.route.js';
 import { ENV_VARS } from './config/envVars.js';
 import { connectDB } from './config/db.js';
+
+//website Routes
 import statisticsRoutes from './routes/statistics.route.js';
+import webProductRoutes from './routes/products.route.js';
 
 //App routes
 import viewOrderRoutes from './routes/App/viewOrder.route.js';
@@ -16,7 +19,7 @@ import productRoutes from "./routes/App/products.route.js";
 import appAuthRoutes from "./routes/App/auth.route.js"
 import appProfileRoutes from './routes/App/profile.route.js';
 import appPaymentRoutes from './routes/App/payment.route.js';
-import fooditemRoutes from './routes/App/fooditem.route.js';
+import fooditemRoutes from './routes/App/FoodItem.route.js';
 
 // Test routes
 import orderRoutes from './routes/test/order.route.js';
@@ -49,7 +52,7 @@ app.use(cookieParser());
 // Set up routes
 app.use("/api/v1/auth", authRoutes);
 app.use('/api/v1', statisticsRoutes);
-
+app.use("/api/v1" ,webProductRoutes )
 // app routes
 app.use("/app/api/v1/auth" , appAuthRoutes)
 app.use('/app/api/v1', viewOrderRoutes); //

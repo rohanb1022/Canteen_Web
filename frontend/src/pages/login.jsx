@@ -29,7 +29,7 @@ const LoginPage = () => {
       console.log("Login success:", loginSuccess);
       if (loginSuccess) {
         toast.success("Login successful");
-        
+
         navigate("/home"); // Navigate to homepage upon success
       } else {
         toast.error("Invalid email or password");

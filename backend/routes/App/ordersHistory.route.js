@@ -1,9 +1,9 @@
 import express from 'express';
-import { getOrderHistory } from '../../controllers/orderHistory.controller.js'; 
+import { getOrderHistory } from '../../controllers/App/orderHistory.controller.js'; 
 import protectRoute from '../../middleware/App/protectRoute.js';
 const router = express.Router();
 
 // Route for fetching order history
-router.get('/order-history' , protectRoute , getOrderHistory);
+router.get('/order-history/:userId' , protectRoute , getOrderHistory);
 
 export default router;

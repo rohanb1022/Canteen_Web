@@ -9,8 +9,9 @@ import { ENV_VARS } from './config/envVars.js';
 import { connectDB } from './config/db.js';
 
 //website Routes
-import statisticsRoutes from './routes/statistics.route.js';
+import webStatisticsRoutes from './routes/statistics.route.js';
 import webProductRoutes from './routes/products.route.js';
+import webOrderHistoryRoutes from "./routes/orderHistory.route.js"
 
 //App routes
 import viewOrderRoutes from './routes/App/viewOrder.route.js';
@@ -51,7 +52,8 @@ app.use(cookieParser());
 
 // Set up routes
 app.use("/api/v1/auth", authRoutes);
-app.use('/api/v1', statisticsRoutes);
+app.use('/api/v1', webStatisticsRoutes);
+app.use("/api/v1" , webOrderHistoryRoutes)
 app.use("/api/v1" ,webProductRoutes )
 // app routes
 app.use("/app/api/v1/auth" , appAuthRoutes)

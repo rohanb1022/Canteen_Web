@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { CheckCircleIcon, XCircleIcon, BellIcon } from "@heroicons/react/outline"; // Import Heroicons
 
 function OrderCard({ order, onComplete, onCancel, onPending }) {
   const [markedItems, setMarkedItems] = useState([]);
@@ -93,27 +94,27 @@ function OrderCard({ order, onComplete, onCancel, onPending }) {
       </p>
 
       {/* Action Buttons */}
-      <div className="flex justify-between w-full mt-4 space-x-4 pt-4 border-t">
+      <div className="flex justify-center space-x-4 mt-4 pt-4 border-t">
         <button
-          className="p-4 bg-green-400 text-white rounded-full w-16 h-16 flex items-center justify-center"
+          className="p-4 bg-green-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-green-500 transition"
           onClick={() => onComplete(order.orderId)} // Use orderId
           aria-label="Mark as completed"
         >
-          <span style={{ color: "black", fontSize: "1.5rem" }}>✔</span> {/* Increased size and black color */}
+          <CheckCircleIcon className="h-8 w-8 text-black" />
         </button>
         <button
-          className="p-4 bg-red-400 text-white rounded-full w-16 h-16 flex items-center justify-center"
+          className="p-4 bg-red-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-red-500 transition"
           onClick={() => onCancel(order.orderId)} // Use orderId
           aria-label="Cancel order"
         >
-          <span style={{ color: "black", fontSize: "1.5rem" }}>✖</span> {/* Increased size and black color */}
+          <XCircleIcon className="h-8 w-8 text-black" />
         </button>
         <button
-          className="p-4 bg-yellow-400 text-white rounded-full w-16 h-16 flex items-center justify-center"
+          className="p-4 bg-yellow-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-yellow-500 transition"
           onClick={() => onPending(order.orderId)} // Use orderId
           aria-label="Notify"
         >
-          <span style={{ color: "black", fontSize: "1.5rem" }}>🔔</span> {/* Increased size and black color */}
+          <BellIcon className="h-8 w-8 text-black" />
         </button>
       </div>
     </div>

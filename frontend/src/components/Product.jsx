@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types'; // Adding PropTypes for better clarity
+import {axiosInstance} from '../lib/axios'; // Import axios instance
 
 const Product = ({ product, updateAvailability }) => {
   const [isAvailable, setIsAvailable] = useState(product.availability);
@@ -13,17 +14,13 @@ const Product = ({ product, updateAvailability }) => {
     setIsLoading(true);
     setError(null);
 
-    // Update the backend with the new availability status
+    // Update the backend with the new availability status using axiosInstance
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/products/${product._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ availability: updatedStatus }),
+      const response = await axiosInstance.put(`/api/v1/products/${product._id}`, {
+        availability: updatedStatus,
       });
 
-      const data = await response.json();
+      const data = response.data;
       if (!data.success) {
         throw new Error('Failed to update product availability');
       }

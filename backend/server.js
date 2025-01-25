@@ -16,7 +16,12 @@ import productRoutes from './routes/products.route.js';
 // Test routes
 import orderRoutes from './routes/test/order.route.js';
 import userRoutes from './routes/test/user.route.js';
-import foodItemRoutes from './routes/test/fooditem.route.js';
+// import foodItemRoutes from './routes/test/fooditem.route.js';
+import FoodItemroutes from './routes/FoodItem.route.js';
+
+import Profile from './routes/profile.route.js';
+
+import payment from './routes/payment.route.js';
 
 const app = express();
 const PORT = ENV_VARS.PORT;
@@ -25,7 +30,7 @@ const __dirname = path.resolve();
 // Configure CORS with proper settings
 app.use(cors({
   origin: (origin, callback) => {
-    const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', '*']; // Add specific origins and '*'
+    const allowedOrigins = ['http://localhost:5173', 'http://localhost:8081', '*']; // Add specific origins and '*'
     
     if (!origin || allowedOrigins.includes(origin) || origin === '*') {
       callback(null, true);
@@ -46,10 +51,16 @@ app.use('/api/v1', statisticsRoutes);
 app.use('/api/v1', viewOrderRoutes); 
 app.use('/api/v1', orderHistoryRoutes);
 app.use('/api/v1', productRoutes);
+
+// app.use('/api/v1', foodItemRoutes);
 // Test routes
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/fooditems', foodItemRoutes);
+app.use('/api', FoodItemroutes);
+
+app.use('/api/v1' , Profile);
+
+app.use('/api/v1' , payment);
 
 app.listen(PORT, () => {
   console.log('Server started at http://localhost:' + PORT);

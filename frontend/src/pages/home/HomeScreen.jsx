@@ -7,6 +7,7 @@ function HomeScreen() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [orders, setOrders] = useState([]);
   const [foodItemsSummary, setFoodItemsSummary] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Fetch orders and summarize food items
   useEffect(() => {
@@ -18,11 +19,11 @@ function HomeScreen() {
   
           const summary = {};
           response.data.forEach((order) => {
-            order.foodItems.forEach((item) => {
-              if (!summary[item.foodItemId.name]) {
-                summary[item.foodItemId.name] = { count: item.quantity };
+            order.items.forEach((item) => {
+              if (!summary[item.foodName]) {
+                summary[item.foodName] = { count: item.quantity };
               } else {
-                summary[item.foodItemId.name].count += item.quantity;
+                summary[item.foodName].count += item.quantity;
               }
             });
           });
@@ -32,22 +33,17 @@ function HomeScreen() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
   
+  // Filtered orders based on the search query
+  const filteredOrders = orders.filter(order =>
+    order.items.some(item =>
+      item.foodName.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
 
   // Handlers for order actions
-  const handleComplete = (orderId) => {
-    console.log(`Order ${orderId} marked as complete`);
-    // Implement backend call to update order status
-  };
-
-  const handleCancel = (orderId) => {
-    console.log(`Order ${orderId} canceled`);
-    // Implement backend call to update order status
-  };
-
-  const handlePending = (orderId) => {
-    console.log(`Order ${orderId} marked as pending`);
-    // Implement backend call to update order status
-  };
+  const handleComplete = (orderId) => console.log(`Order ${orderId} marked as complete`);
+  const handleCancel = (orderId) => console.log(`Order ${orderId} canceled`);
+  const handlePending = (orderId) => console.log(`Order ${orderId} marked as pending`);
 
   return (
     <div className="flex h-screen">
@@ -62,6 +58,13 @@ function HomeScreen() {
             ☰
           </button>
           <h1 className="text-xl font-bold">Order Dashboard</h1>
+          <input
+            type="text"
+            placeholder="Search for a dish..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="p-2 rounded-md text-black"
+          />
         </div>
 
         <div className="flex">
@@ -84,17 +87,16 @@ function HomeScreen() {
           </div>
 
           <div className="flex-1 grid grid-cols-3 gap-4 p-4">
-            {orders.length > 0 ? (
-              orders.map((order) => (
+            {filteredOrders.length > 0 ? (
+              filteredOrders.map((order) => (
                 <OrderCard
-                  key={order._id}  // Make sure this is unique for each order
+                  key={order.orderId}  // Unique key for each order
                   order={order}
-                  onComplete={() => handleComplete(order._id)}
-                  onCancel={() => handleCancel(order._id)}
-                  onPending={() => handlePending(order._id)}
+                  onComplete={() => handleComplete(order.orderId)}
+                  onCancel={() => handleCancel(order.orderId)}
+                  onPending={() => handlePending(order.orderId)}
                 />
               ))
-              
             ) : (
               <p className="text-gray-500 text-center">No orders found</p>
             )}

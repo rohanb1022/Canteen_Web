@@ -23,9 +23,9 @@ function OrderCard({ order, onComplete, onCancel, onPending }) {
       {/* Display last 4 characters of Order ID with larger text */}
       {/* Order Date */}
       <p className="text-sm text-gray-500">
-  {new Date(order.orderDate).toLocaleDateString('en-GB')} {/* Format: day/month/year */}
-</p>
-
+        {new Date(order.orderDate).toLocaleDateString("en-GB")}{" "}
+        {/* Format: day/month/year */}
+      </p>
       {/* Food Items */}
       <div className="my-2 w-full">
         {foodItems.length > 0 ? (
@@ -64,29 +64,31 @@ function OrderCard({ order, onComplete, onCancel, onPending }) {
       </p>
       {/* Action Buttons */}
       <div className="flex justify-around w-full mt-4">
-  <button
-    className="p-4 bg-green-400 text-white rounded-full w-16 h-16 flex items-center justify-center"
-    onClick={() => onComplete(order.orderId)} // Use orderId
-    aria-label="Mark as completed"
-  >
-    <span style={{ color: 'black', fontSize: '1.5rem' }}>✔</span> {/* Increased size and black color */}
-  </button>
-  <button
-    className="p-4 bg-red-400 text-white rounded-full w-16 h-16 flex items-center justify-center"
-    onClick={() => onCancel(order.orderId)} // Use orderId
-    aria-label="Cancel order"
-  >
-    <span style={{ color: 'black', fontSize: '1.5rem' }}>✖</span> {/* Increased size and black color */}
-  </button>
-  <button
-    className="p-4 bg-yellow-400 text-white rounded-full w-16 h-16 flex items-center justify-center"
-    onClick={() => onPending(order.orderId)} // Use orderId
-    aria-label="Notify"
-  >
-    <span style={{ color: 'black', fontSize: '1.5rem' }}>🔔</span> {/* Increased size and black color */}
-  </button>
-</div>
-
+        <button
+          className="p-4 bg-green-400 text-white rounded-full w-16 h-16 flex items-center justify-center"
+          onClick={() => onComplete(order.orderId)} // Use orderId
+          aria-label="Mark as completed"
+        >
+          <span style={{ color: "black", fontSize: "1.5rem" }}>✔</span>{" "}
+          {/* Increased size and black color */}
+        </button>
+        <button
+          className="p-4 bg-red-400 text-white rounded-full w-16 h-16 flex items-center justify-center"
+          onClick={() => onCancel(order.orderId)} // Use orderId
+          aria-label="Cancel order"
+        >
+          <span style={{ color: "black", fontSize: "1.5rem" }}>✖</span>{" "}
+          {/* Increased size and black color */}
+        </button>
+        <button
+          className="p-4 bg-yellow-400 text-white rounded-full w-16 h-16 flex items-center justify-center"
+          onClick={() => onPending(order.orderId)} // Use orderId
+          aria-label="Notify"
+        >
+          <span style={{ color: "black", fontSize: "1.5rem" }}>🔔</span>{" "}
+          {/* Increased size and black color */}
+        </button>
+      </div>
     </div>
   );
 }

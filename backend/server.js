@@ -12,6 +12,7 @@ import viewOrderRoutes from './routes/viewOrder.route.js';
 import statisticsRoutes from './routes/statistics.route.js';
 import orderHistoryRoutes from './routes/ordersHistory.route.js';
 import productRoutes from './routes/products.route.js';
+import updateStatus from './routes/orderRoutes.js';
 
 // Test routes
 import orderRoutes from './routes/test/order.route.js';
@@ -51,7 +52,7 @@ app.use('/api/v1', statisticsRoutes);
 app.use('/api/v1', viewOrderRoutes); 
 app.use('/api/v1', orderHistoryRoutes);
 app.use('/api/v1', productRoutes);
-
+app.use('/api/v1', updateStatus);
 // app.use('/api/v1', foodItemRoutes);
 // Test routes
 app.use('/api/orders', orderRoutes);

@@ -8,6 +8,7 @@ function HomeScreen() {
   const [orders, setOrders] = useState([]);
   const [foodItemsSummary, setFoodItemsSummary] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [highlightedOrders, setHighlightedOrders] = useState({});
 
   // Fetch orders and summarize food items
   useEffect(() => {
@@ -35,7 +36,6 @@ function HomeScreen() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-
     // Update foodItemsSummary when an order is rejected or completed
     const handleOrderCountChange = (orderId) => {
       const order = orders.find((o) => o.orderId === orderId);
@@ -52,7 +52,7 @@ function HomeScreen() {
         setFoodItemsSummary(updatedSummary);
       }
     };
-  
+
   // Filtered orders based on the search query
   const filteredOrders = orders.filter((order) =>
     order.items.some((item) =>
@@ -60,10 +60,12 @@ function HomeScreen() {
     )
   );
 
+
   const handleUpdateStatus = async (orderId, status) => {
     try {
       await axiosInstance.put("/api/v1/update-status", { orderId, status });
       console.log(`Order ${orderId} marked as ${status}`);
+
             // Update the orders state to reflect the new status
             setOrders((prevOrders) =>
               prevOrders.map((order) =>
@@ -74,11 +76,11 @@ function HomeScreen() {
             if (status === "rejected" || status === "completed") {
               handleOrderCountChange(orderId);
             }
+
     } catch (error) {
       console.error(`Error marking order ${orderId} as ${status}`, error);
     }
   };
-
 
   return (
     <div className="flex h-screen">
@@ -125,10 +127,13 @@ function HomeScreen() {
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
                 <OrderCard
+
                   key={order.orderId} // Unique key for each order
                   order={order}
                   onUpdateStatus={handleUpdateStatus} // Pass the function directly
+
                   onOrderCountChange={handleOrderCountChange} // Pass count change function
+
                 />
               ))
             ) : (

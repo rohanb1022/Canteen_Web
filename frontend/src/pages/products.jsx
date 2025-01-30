@@ -5,6 +5,7 @@ import Sidebar from '../components/Sidebar';
 
 const Products = () => {
   const [dishes, setDishes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -34,6 +35,11 @@ const Products = () => {
     );
   };
 
+  // Function to filter products based on search term
+  const filteredDishes = dishes.filter((dish) =>
+    dish.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (loading) {
     return <div className="text-center text-xl font-bold text-gray-700">Loading...</div>;
   }
@@ -47,11 +53,20 @@ const Products = () => {
       <Sidebar />
       <div className="flex-1 p-6 bg-gradient-to-b from-orange-100 via-orange-200 to-orange-300 ml-4">
         <h1 className="text-3xl font-bold text-orange-500 mb-6">Product List</h1>
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Search for a product..."
+            className="w-full p-2 border border-orange-400 rounded-md"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {dishes.length === 0 ? (
+          {filteredDishes.length === 0 ? (
             <div>No products found.</div>
           ) : (
-            dishes.map((dish) => (
+            filteredDishes.map((dish) => (
               <Product key={dish._id} product={dish} updateAvailability={updateAvailability} />
             ))
           )}

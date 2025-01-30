@@ -25,10 +25,10 @@ import appPaymentRoutes from './routes/App/payment.route.js';
 import fooditemRoutes from './routes/App/FoodItem.route.js';
 
 import protectRoute from './middleware/protectRoute.js';
-import viewOrderRoutes from './routes/viewOrder.route.js';
-import statisticsRoutes from './routes/statistics.route.js';
-import orderHistoryRoutes from './routes/ordersHistory.route.js';
-import productRoutes from './routes/products.route.js';
+// import viewOrderRoutes from './routes/viewOrder.route.js';
+// import statisticsRoutes from './routes/statistics.route.js';
+// import orderHistoryRoutes from './routes/ordersHistory.route.js';
+// import productRoutes from './routes/products.route.js';
 import updateStatus from './routes/orderRoutes.js';
 
 
@@ -78,10 +78,10 @@ app.use("/app/api/v1" , fooditemRoutes)
 
 
 //website routes
-app.use('/api/v1', statisticsRoutes);
-app.use('/api/v1', viewOrderRoutes); 
-app.use('/api/v1', orderHistoryRoutes);
-app.use('/api/v1', productRoutes);
+app.use('/api/v1', webStatisticsRoutes);
+app.use('/api/v1', webViewOrderRoutes); 
+app.use('/api/v1',  webOrderHistoryRoutes);
+app.use('/api/v1', webProductRoutes);
 app.use('/api/v1', updateStatus);
 
 // app.use('/api/v1', foodItemRoutes);

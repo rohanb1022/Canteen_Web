@@ -18,6 +18,9 @@ const AppUserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  completedOrder : [{
+    type : mongoose.Schema.Types.ObjectId , ref : "AppUser"
+  }],
   createdAt: {
     type: Date,
     default: Date.now

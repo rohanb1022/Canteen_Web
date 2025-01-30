@@ -1,13 +1,14 @@
-import {User} from '../models/user.model.js';
+import AppUser  from '../../models/appuser.model.js';
 import bcryptjs from 'bcryptjs';
-import { generateTokenAndSetCookie } from '../utils/generateTokens.js';
+import { generateTokenAndSetCookie } from '../../utils/generateTokens.js';
+
 
 export async function signup(req, res) {
     try {
-        const { email, password, username } = req.body;
+        const { email, password, username, phoneNumber } = req.body;
 
         // Validation checks
-        if (!email || !password || !username) {
+        if (!email || !password || !username || !phoneNumber) {
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
 
@@ -22,16 +23,27 @@ export async function signup(req, res) {
             return res.status(400).json({ success: false, message: "Password should be at least 6 characters" });
         }
 
+        // Phone number length check
+        if (phoneNumber.length < 10) {
+            return res.status(400).json({ success: false, message: "Phone number should be 10 digits" });
+        }
+
         // Check if email already exists
-        const existingUserByEmail = await User.findOne({ email: email });
+        const existingUserByEmail = await AppUser.findOne({ email: email });
         if (existingUserByEmail) {
             return res.status(400).json({ success: false, message: "Email already exists" });
         }
 
         // Check if username already exists
-        const existingUserByUsername = await User.findOne({ username: username });
+        const existingUserByUsername = await AppUser.findOne({ username: username });
         if (existingUserByUsername) {
             return res.status(400).json({ success: false, message: "Username already exists" });
+        }
+
+        // Check if phone number already exists
+        const existingUserByPhoneNumber = await AppUser.findOne({ phoneNumber: phoneNumber });
+        if (existingUserByPhoneNumber) {
+            return res.status(400).json({ success: false, message: "Phone number already exists" });
         }
 
         // Hashing the password
@@ -39,10 +51,11 @@ export async function signup(req, res) {
         const hashedPassword = await bcryptjs.hash(password, salt);
 
         // Creating a new user without the Image field
-        const newUser = new User({
+        const newUser = new AppUser({
             email: email,
             password: hashedPassword,
             username: username,
+            phoneNumber: phoneNumber
         });
 
         // Generating token and setting cookie
@@ -76,7 +89,7 @@ export async function login(req, res) {
         }
 
         // Find user by email
-        const user = await User.findOne({ email: email });
+        const user = await AppUser.findOne({ email: email });
         if (!user) {
             return res.status(404).json({ success: false, message: "Invalid credentials" });
         }
@@ -88,13 +101,14 @@ export async function login(req, res) {
         }
 
         // Generating token and setting cookie
-        generateTokenAndSetCookie(user._id, res);
+        const re=generateTokenAndSetCookie(user._id, res);
 
         // Responding with user data (password omitted)
         res.status(200).json({
             success: true,
             user: {
                 ...user._doc,
+                re,
                 password: "" // Omit password from response
             }
         });
@@ -108,7 +122,7 @@ export async function login(req, res) {
 export async function logout(req, res) {
     try {
         // Clearing the authentication cookie
-        res.clearCookie("jwt-netflix");
+        res.clearCookie("jwt-canteen");
         res.status(200).json({ success: true, message: "Logged out successfully" });
     } catch (error) {
         console.log("Error in logout controller:", error.message);

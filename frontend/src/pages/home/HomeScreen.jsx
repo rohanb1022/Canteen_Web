@@ -8,6 +8,7 @@ function HomeScreen() {
   const [orders, setOrders] = useState([]);
   const [foodItemsSummary, setFoodItemsSummary] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [highlightedOrders, setHighlightedOrders] = useState({});
 
   // Fetch orders and summarize food items
   useEffect(() => {
@@ -60,6 +61,7 @@ function HomeScreen() {
       item.foodName.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
+
 
   const handleUpdateStatus = async (orderId, status) => {
     try {
@@ -127,10 +129,14 @@ function HomeScreen() {
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
                 <OrderCard
+
                   key={order.orderId} // Unique key for each order
                   order={order}
                   onUpdateStatus={handleUpdateStatus} // Pass the function directly
+
                   onOrderCountChange={handleOrderCountChange} // Pass count change function
+
+
                 />
               ))
             ) : (

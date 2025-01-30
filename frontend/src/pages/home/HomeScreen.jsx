@@ -20,19 +20,40 @@ function HomeScreen() {
 
           const summary = {};
           response.data.forEach((order) => {
-            order.items.forEach((item) => {
-              if (!summary[item.foodName]) {
-                summary[item.foodName] = { count: item.quantity };
-              } else {
-                summary[item.foodName].count += item.quantity;
-              }
-            });
+            if (order.status !== "completed" && order.status !== "rejected") {
+              order.items.forEach((item) => {
+                if (!summary[item.foodName]) {
+                  summary[item.foodName] = { count: item.quantity };
+                } else {
+                  summary[item.foodName].count += item.quantity;
+                }
+              });
+            }
           });
           setFoodItemsSummary(summary);
         }
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+  // Update foodItemsSummary when an order is rejected or completed
+  const handleOrderCountChange = (orderId) => {
+    const order = orders.find((o) => o.orderId === orderId);
+    if (order) {
+      const updatedSummary = { ...foodItemsSummary };
+
+      order.items.forEach((item) => {
+        if (updatedSummary[item.foodName]) {
+          updatedSummary[item.foodName].count -= item.quantity;
+          if (updatedSummary[item.foodName].count <= 0) {
+            delete updatedSummary[item.foodName]; // Remove item if count is zero
+          }
+        }
+      });
+
+      setFoodItemsSummary(updatedSummary);
+    }
+  };
 
   // Filtered orders based on the search query
   const filteredOrders = orders.filter((order) =>
@@ -46,12 +67,22 @@ function HomeScreen() {
     try {
       await axiosInstance.put("/api/v1/update-status", { orderId, status });
       console.log(`Order ${orderId} marked as ${status}`);
+
+      // Update the orders state to reflect the new status
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.orderId === orderId ? { ...order, status } : order
+        )
+      );
+
+      // Decrement the count if status is rejected or completed
+      if (status === "rejected" || status === "completed") {
+        handleOrderCountChange(orderId);
+      }
     } catch (error) {
       console.error(`Error marking order ${orderId} as ${status}`, error);
     }
   };
-
-
 
   return (
     <div className="flex h-screen">
@@ -102,6 +133,9 @@ function HomeScreen() {
                   key={order.orderId} // Unique key for each order
                   order={order}
                   onUpdateStatus={handleUpdateStatus} // Pass the function directly
+
+                  onOrderCountChange={handleOrderCountChange} // Pass count change function
+
 
                 />
               ))

@@ -23,6 +23,8 @@ import appAuthRoutes from "./routes/App/auth.route.js"
 import appProfileRoutes from './routes/App/profile.route.js';
 import appPaymentRoutes from './routes/App/payment.route.js';
 import fooditemRoutes from './routes/App/FoodItem.route.js';
+import tokenroutes from './routes/App/token.route.js';
+
 
 import protectRoute from './middleware/protectRoute.js';
 // import viewOrderRoutes from './routes/viewOrder.route.js';
@@ -75,6 +77,7 @@ app.use('/app/api/v1', productRoutes);//
 app.use('/app/api/v1' , appProfileRoutes);//
 app.use('/app/api/v1' , appPaymentRoutes);//
 app.use("/app/api/v1" , fooditemRoutes)
+app.use('/app/api/tokens', tokenroutes);
 
 
 //website routes

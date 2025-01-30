@@ -8,6 +8,7 @@ function HomeScreen() {
   const [orders, setOrders] = useState([]);
   const [foodItemsSummary, setFoodItemsSummary] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [highlightedOrders, setHighlightedOrders] = useState({});
 
   // Fetch orders and summarize food items
   useEffect(() => {
@@ -40,6 +41,7 @@ function HomeScreen() {
     )
   );
 
+
   const handleUpdateStatus = async (orderId, status) => {
     try {
       await axiosInstance.put("/api/v1/update-status", { orderId, status });
@@ -48,6 +50,7 @@ function HomeScreen() {
       console.error(`Error marking order ${orderId} as ${status}`, error);
     }
   };
+
 
 
   return (
@@ -95,9 +98,11 @@ function HomeScreen() {
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
                 <OrderCard
+
                   key={order.orderId} // Unique key for each order
                   order={order}
                   onUpdateStatus={handleUpdateStatus} // Pass the function directly
+
                 />
               ))
             ) : (

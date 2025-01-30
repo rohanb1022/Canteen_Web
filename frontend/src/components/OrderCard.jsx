@@ -4,6 +4,7 @@ function OrderCard({ order, onUpdateStatus }) {
   const [orderStatus, setOrderStatus] = useState(order.status);
   const [timeAgo, setTimeAgo] = useState("");
 
+
   useEffect(() => {
 
     // Calculate the "time ago" string
@@ -39,7 +40,9 @@ function OrderCard({ order, onUpdateStatus }) {
     }
   };
 
-  return (
+
+
+  return ( 
     <div className={`border rounded-md shadow-md p-4 flex flex-col ${getCardStyle()}`}>
       <div className="flex justify-between w-full">
         <p className="text-xl text-blue-500">Order ID: {order.orderId.slice(-4)}</p>

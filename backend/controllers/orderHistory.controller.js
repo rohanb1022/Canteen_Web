@@ -1,5 +1,4 @@
 import Order from '../models/order.model.js';
-import AppUser from '../models/appuser.model.js';  // Changed from User to AppUser
 
 export const getOrderHistory = async (req, res) => {
   try {

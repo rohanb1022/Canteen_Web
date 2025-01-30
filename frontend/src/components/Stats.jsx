@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import {axiosInstance} from '../lib/axios'; // Import axios instance
 
 const Stats = () => {
   const [stats, setStats] = useState({
@@ -14,7 +14,7 @@ const Stats = () => {
     try {
       setLoading(true);
       setError(null); // Reset error state
-      const response = await axios.get('http://localhost:5000/api/v1/statistics');
+      const response = await axiosInstance.get('/api/v1/statistics'); // Use axios instance
       setStats(response.data);
       console.log('API Response:', response.data);
     } catch (err) {

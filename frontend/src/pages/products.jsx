@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import {axiosInstance} from '../lib/axios'; // Import axios instance
 import Product from '../components/Product';
 import Sidebar from '../components/Sidebar';
 
@@ -9,14 +10,9 @@ const Products = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/v1/products')
+    axiosInstance.get('/api/v1/products') // Use axios instance for the request
       .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch products');
-        }
-        return response.json();
-      })
-      .then((data) => {
+        const data = response.data;
         if (data.success && Array.isArray(data.data)) {
           setDishes(data.data);
         } else {

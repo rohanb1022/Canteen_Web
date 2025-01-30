@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
-import  { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import {axiosInstance} from '../lib/axios'; // Import axios instance
+
 
 const List = ({ filter }) => {
   const [orders, setOrders] = useState([]);
@@ -8,7 +8,7 @@ const List = ({ filter }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/v1/order-history') // Update the endpoint as per your backend
+    axiosInstance.get('/api/v1/order-history') // Use axiosInstance for the GET request
       .then(response => {
         console.log('API Response:', response.data); // Log the entire response
         setOrders(response.data);

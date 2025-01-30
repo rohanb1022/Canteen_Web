@@ -41,21 +41,17 @@ function HomeScreen() {
     )
   );
 
-  // Handlers for order actions
-  const handleComplete = (orderId) =>
-    console.log(`Order ${orderId} marked as complete`);
-  const handleCancel = (orderId) =>
-    console.log(`Order ${orderId} canceled`);
-  const handlePending = (orderId) =>
-    console.log(`Order ${orderId} marked as pending`);
 
-  // Highlight a specific card
-  const handleHighlight = (orderId) => {
-    setHighlightedOrders((prev) => ({
-      ...prev,
-      [orderId]: !prev[orderId],
-    }));
+  const handleUpdateStatus = async (orderId, status) => {
+    try {
+      await axiosInstance.put("/api/v1/update-status", { orderId, status });
+      console.log(`Order ${orderId} marked as ${status}`);
+    } catch (error) {
+      console.error(`Error marking order ${orderId} as ${status}`, error);
+    }
   };
+
+
 
   return (
     <div className="flex h-screen">
@@ -102,17 +98,11 @@ function HomeScreen() {
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
                 <OrderCard
-                  key={order.orderId}
+
+                  key={order.orderId} // Unique key for each order
                   order={order}
-                  onComplete={() => handleComplete(order.orderId)}
-                  onCancel={
-                    highlightedOrders[order.orderId]
-                      ? null
-                      : () => handleCancel(order.orderId)
-                  }
-                  onPending={() => handlePending(order.orderId)}
-                  isHighlighted={highlightedOrders[order.orderId]}
-                  onHighlight={() => handleHighlight(order.orderId)}
+                  onUpdateStatus={handleUpdateStatus} // Pass the function directly
+
                 />
               ))
             ) : (

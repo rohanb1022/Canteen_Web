@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.route.js';
 import { ENV_VARS } from './config/envVars.js';
 import { connectDB } from './config/db.js';
 
+
 //website Routes
 import webStatisticsRoutes from './routes/statistics.route.js';
 import webProductRoutes from './routes/products.route.js';
@@ -22,6 +23,14 @@ import appAuthRoutes from "./routes/App/auth.route.js"
 import appProfileRoutes from './routes/App/profile.route.js';
 import appPaymentRoutes from './routes/App/payment.route.js';
 import fooditemRoutes from './routes/App/FoodItem.route.js';
+
+import protectRoute from './middleware/protectRoute.js';
+import viewOrderRoutes from './routes/viewOrder.route.js';
+import statisticsRoutes from './routes/statistics.route.js';
+import orderHistoryRoutes from './routes/ordersHistory.route.js';
+import productRoutes from './routes/products.route.js';
+import updateStatus from './routes/orderRoutes.js';
+
 
 // Test routes
 import orderRoutes from './routes/test/order.route.js';
@@ -53,6 +62,7 @@ app.use(cookieParser());
 
 // Set up routes
 app.use("/api/v1/auth", authRoutes);
+
 app.use('/api/v1', webStatisticsRoutes);
 app.use("/api/v1" , webOrderHistoryRoutes)
 app.use("/api/v1" ,webProductRoutes )
@@ -65,6 +75,14 @@ app.use('/app/api/v1', productRoutes);//
 app.use('/app/api/v1' , appProfileRoutes);//
 app.use('/app/api/v1' , appPaymentRoutes);//
 app.use("/app/api/v1" , fooditemRoutes)
+
+
+//website routes
+app.use('/api/v1', statisticsRoutes);
+app.use('/api/v1', viewOrderRoutes); 
+app.use('/api/v1', orderHistoryRoutes);
+app.use('/api/v1', productRoutes);
+app.use('/api/v1', updateStatus);
 
 // app.use('/api/v1', foodItemRoutes);
 // Test routes

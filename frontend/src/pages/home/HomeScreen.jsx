@@ -36,24 +36,22 @@ function HomeScreen() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  // Update foodItemsSummary when an order is rejected or completed
-  const handleOrderCountChange = (orderId) => {
-    const order = orders.find((o) => o.orderId === orderId);
-    if (order) {
-      const updatedSummary = { ...foodItemsSummary };
-
-      order.items.forEach((item) => {
-        if (updatedSummary[item.foodName]) {
-          updatedSummary[item.foodName].count -= item.quantity;
-          if (updatedSummary[item.foodName].count <= 0) {
-            delete updatedSummary[item.foodName]; // Remove item if count is zero
+    // Update foodItemsSummary when an order is rejected or completed
+    const handleOrderCountChange = (orderId) => {
+      const order = orders.find((o) => o.orderId === orderId);
+      if (order) {
+        const updatedSummary = { ...foodItemsSummary };
+        order.items.forEach((item) => {
+          if (updatedSummary[item.foodName]) {
+            updatedSummary[item.foodName].count -= item.quantity;
+            if (updatedSummary[item.foodName].count <= 0) {
+              delete updatedSummary[item.foodName]; // Remove item if count is zero
+            }
           }
-        }
-      });
-
-      setFoodItemsSummary(updatedSummary);
-    }
-  };
+        });
+        setFoodItemsSummary(updatedSummary);
+      }
+    };
 
   // Filtered orders based on the search query
   const filteredOrders = orders.filter((order) =>
@@ -68,17 +66,17 @@ function HomeScreen() {
       await axiosInstance.put("/api/v1/update-status", { orderId, status });
       console.log(`Order ${orderId} marked as ${status}`);
 
-      // Update the orders state to reflect the new status
-      setOrders((prevOrders) =>
-        prevOrders.map((order) =>
-          order.orderId === orderId ? { ...order, status } : order
-        )
-      );
+            // Update the orders state to reflect the new status
+            setOrders((prevOrders) =>
+              prevOrders.map((order) =>
+                order.orderId === orderId ? { ...order, status } : order
+              )
+            );
+            // Decrement the count if status is rejected or completed
+            if (status === "rejected" || status === "completed") {
+              handleOrderCountChange(orderId);
+            }
 
-      // Decrement the count if status is rejected or completed
-      if (status === "rejected" || status === "completed") {
-        handleOrderCountChange(orderId);
-      }
     } catch (error) {
       console.error(`Error marking order ${orderId} as ${status}`, error);
     }
@@ -135,7 +133,6 @@ function HomeScreen() {
                   onUpdateStatus={handleUpdateStatus} // Pass the function directly
 
                   onOrderCountChange={handleOrderCountChange} // Pass count change function
-
 
                 />
               ))

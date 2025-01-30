@@ -24,7 +24,8 @@ import appProfileRoutes from './routes/App/profile.route.js';
 import appPaymentRoutes from './routes/App/payment.route.js';
 import fooditemRoutes from './routes/App/FoodItem.route.js';
 import tokenroutes from './routes/App/token.route.js';
-
+import forgotpass from './routes/App/forgotpass.route.js'
+import resetpass from './routes/App/resetpass.route.js';
 
 import protectRoute from './middleware/protectRoute.js';
 // import viewOrderRoutes from './routes/viewOrder.route.js';
@@ -78,6 +79,8 @@ app.use('/app/api/v1' , appProfileRoutes);//
 app.use('/app/api/v1' , appPaymentRoutes);//
 app.use("/app/api/v1" , fooditemRoutes)
 app.use('/app/api/tokens', tokenroutes);
+app.use('/app/api/forgotpassword', forgotpass);
+app.use('/app/api/resetpassword', resetpass);
 
 
 //website routes

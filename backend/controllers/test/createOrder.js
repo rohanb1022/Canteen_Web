@@ -7,7 +7,7 @@ export const createOrder = async (req, res) => {
     const { userId, foodItems, totalAmount , paymentId } = req.body;
 
     // Validate required fields
-    if (!userId || !foodItems || !totalAmount || paymentId) {
+    if (!userId || !foodItems || !totalAmount || !paymentId) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 

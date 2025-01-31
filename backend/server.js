@@ -26,7 +26,6 @@ import fooditemRoutes from './routes/App/FoodItem.route.js';
 import tokenroutes from './routes/App/token.route.js';
 import forgotpass from './routes/App/forgotpass.route.js'
 import resetpass from './routes/App/resetpass.route.js';
-
 import protectRoute from './middleware/protectRoute.js';
 // import viewOrderRoutes from './routes/viewOrder.route.js';
 // import statisticsRoutes from './routes/statistics.route.js';

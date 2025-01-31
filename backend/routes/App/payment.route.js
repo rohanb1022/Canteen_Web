@@ -42,6 +42,7 @@ router.post('/payment', (req, res) => {
   // Compare the signatures
   if (expectedSignature === razorpay_signature) {
     res.status(200).json({ message: 'Payment verified successfully!' });
+    //send a post req of data to url: http://localhost:5000/api/orders/create for canteen web to reciver the orders
   } else {
     res.status(400).json({ error: 'Invalid payment signature!' });
   }

@@ -4,10 +4,10 @@ import AppUser from '../../models/appuser.model.js';
 export const createOrder = async (req, res) => {
   try {
     // Extracting the required fields from the request body
-    const { userId, foodItems, totalAmount } = req.body;
+    const { userId, foodItems, totalAmount , paymentId } = req.body;
 
     // Validate required fields
-    if (!userId || !foodItems || !totalAmount) {
+    if (!userId || !foodItems || !totalAmount || paymentId) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
@@ -22,6 +22,7 @@ export const createOrder = async (req, res) => {
       userId,
       foodItems,  // No check for foodItemId now
       totalAmount,
+      paymentId,
       status: 'pending',  // Default status is pending
     });
 

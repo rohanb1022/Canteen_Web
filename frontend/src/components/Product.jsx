@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import PropTypes from 'prop-types'; // Adding PropTypes for better clarity
 import {axiosInstance} from '../lib/axios'; // Import axios instance
 
@@ -14,6 +14,8 @@ const Product = ({ product, updateAvailability }) => {
     setIsLoading(true);
     setError(null);
 
+
+    
     // Update the backend with the new availability status using axiosInstance
     try {
       const response = await axiosInstance.put(`/api/v1/products/${product._id}`, {

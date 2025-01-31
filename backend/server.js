@@ -3,7 +3,7 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import cors from 'cors';
 
-
+//test
 import authRoutes from './routes/auth.route.js';
 import { ENV_VARS } from './config/envVars.js';
 import { connectDB } from './config/db.js';

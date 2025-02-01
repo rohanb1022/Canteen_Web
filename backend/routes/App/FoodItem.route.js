@@ -7,7 +7,7 @@ const router = express.Router();
 // Get all food items with specific fields
 router.get('/fooditem', async (req, res) => {
   try {
-    const foodItems = await FoodItem.find({}, 'img rating name category price');
+    const foodItems = await FoodItem.find({ availability: true },'img rating name category price');
     
     res.status(200).json({
       success: true,

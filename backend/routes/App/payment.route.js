@@ -5,8 +5,8 @@ import crypto from 'crypto';
 const router = express.Router();
 // Initialize Razorpay instance
 const razorpay = new Razorpay({
-  key_id: 'rzp_test_kNTNMzLSu9RLNK', // Replace with your Razorpay key ID
-  key_secret: 'bw8RYAX3Jndu212nhwDOKvv0', // Replace with your Razorpay key secret
+  key_id: 'rzp_test_qJLabrBReNvJWY', // Replace with your Razorpay key ID
+  key_secret: 'cOpqWjvYVxdKptwB7yt8apDN', // Replace with your Razorpay key secret
 });
 
 // Route to create an order
@@ -42,7 +42,6 @@ router.post('/payment', (req, res) => {
   // Compare the signatures
   if (expectedSignature === razorpay_signature) {
     res.status(200).json({ message: 'Payment verified successfully!' });
-    //send a post req of data to url: http://localhost:5000/api/orders/create for canteen web to reciver the orders
   } else {
     res.status(400).json({ error: 'Invalid payment signature!' });
   }
@@ -50,4 +49,3 @@ router.post('/payment', (req, res) => {
 
 // Default export
 export default router;
-//

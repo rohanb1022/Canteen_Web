@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // Route to send token
-router.get('/generatetoken',async (req, res) => {
+router.post('/generatetoken',async (req, res) => {
   //need to work on this.
   try {
     const { userId } = req.body;

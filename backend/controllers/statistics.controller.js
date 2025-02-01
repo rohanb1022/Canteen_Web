@@ -1,24 +1,48 @@
+
+
 import Order from '../models/order.model.js';
+import mongoose from 'mongoose';
 
 export const getStatistics = async (req, res) => {
   try {
-    // Total number of orders
-    const totalOrders = await Order.countDocuments();
+    const { type } = req.query; // 'daily' or 'monthly'
 
-    // Total revenue from completed orders
-    const totalRevenue = await Order.aggregate([
-      { $match: { status: 'completed' } },  // Filter for completed orders
-      { $group: { _id: null, total: { $sum: '$totalAmount' } } }
+    let matchStage = {};
+    let groupStage = {};
+
+    // Setting up aggregation based on type (daily or monthly)
+    if (type === 'monthly') {
+      matchStage = {}; // No filtering needed for monthly data
+      groupStage = {
+        _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+        totalOrders: { $sum: 1 },
+        totalRevenue: { $sum: "$totalAmount" },
+        completedOrders: { $sum: { $cond: [{ $eq: ["$status", "completed"] }, 1, 0] } },
+      };
+    } else {
+      matchStage = {}; // Default to daily stats
+      groupStage = {
+        _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" }, day: { $dayOfMonth: "$createdAt" } },
+        totalOrders: { $sum: 1 },
+        totalRevenue: { $sum: "$totalAmount" },
+        completedOrders: { $sum: { $cond: [{ $eq: ["$status", "completed"] }, 1, 0] } },
+      };
+    }
+
+    // Aggregation pipeline
+    const stats = await Order.aggregate([
+      { $match: matchStage },
+      { $group: groupStage },
+      { $sort: { "_id.year": 1, "_id.month": 1, "_id.day": 1 } }
     ]);
 
-    // Number of completed orders
-    const completedOrders = await Order.countDocuments({ status: 'completed' });
-
-    res.json({
-      totalOrders,
-      totalRevenue: totalRevenue[0]?.total || 0,  // Return total revenue if available, else 0
-      completedOrders
-    });
+    // Ensure there are enough records for comparison
+    if (stats.length < 2) {
+      // If less than 2 records, return empty for comparison purposes
+      res.json(stats);
+    } else {
+      res.json(stats);
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

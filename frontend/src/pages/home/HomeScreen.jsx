@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Sidebar";
 import OrderCard from "../../components/OrderCard";
@@ -40,10 +41,13 @@ function HomeScreen() {
       window.location.reload(); // Refreshes the page
     }, 30000); // 3000 milliseconds = 3 seconds
 
+<<<<<<< HEAD
     // Clean up the interval on component unmount
     return () => clearInterval(interval);
   }, []);
 
+=======
+>>>>>>> 34cef9a (homescreen changes)
   const handleOrderCountChange = (orderId, status) => {
     const order = orders.find((o) => o.orderId === orderId);
     if (order && (status === "completed" || status === "rejected")) {

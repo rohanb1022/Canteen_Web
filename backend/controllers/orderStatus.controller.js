@@ -22,7 +22,6 @@
 //   }
 // };
 
-
 import Order from '../models/order.model.js';
 
 export const updateOrderStatus = async (req, res) => {

@@ -8,7 +8,7 @@ router.post('/resetpassword', async (req, res) => {
   try {
     const { email, otp, newPassword } = req.body;
     
-    console.log("Received data:", req.body); // Debugging line
+
 
     // Validate input
     if (!email || !otp || !newPassword) {
@@ -23,17 +23,19 @@ router.post('/resetpassword', async (req, res) => {
     }
 
     // Check if OTP is valid
-    if (!user.resetToken || user.resetToken !== otp || user.resetTokenExpires < Date.now()) {
+    if (!user.otp || user.otp !== otp || user.otpExpires < Date.now()) {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
     // Hash the new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
+    
 
     // Clear reset token
-    user.resetToken = null;
-    user.resetTokenExpires = null;
+    user.otp = null;
+    user.otpExpires = null;
+    
 
     await user.save();
 

@@ -25,8 +25,8 @@ const AppUserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  resetToken: { type: String },
-  resetTokenExpires: { type: Date },
+  otp: { type: String },
+  otpExpires: { type: Date },
 }, { timestamps: true });
 
 const AppUser = mongoose.models.AppUser || mongoose.model('AppUser', AppUserSchema);

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Sidebar";
 import OrderCard from "../../components/OrderCard";
@@ -8,7 +9,7 @@ function HomeScreen() {
   const [orders, setOrders] = useState([]);
   const [foodItemsSummary, setFoodItemsSummary] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
-  const [highlightedOrders, setHighlightedOrders] = useState({});
+  const [selectedStatus, setSelectedStatus] = useState(""); // Added state for selected filter
 
   // Fetch orders and summarize food items
   useEffect(() => {
@@ -36,47 +37,51 @@ function HomeScreen() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-    // Update foodItemsSummary when an order is rejected or completed
-    const handleOrderCountChange = (orderId) => {
-      const order = orders.find((o) => o.orderId === orderId);
-      if (order) {
-        const updatedSummary = { ...foodItemsSummary };
-        order.items.forEach((item) => {
-          if (updatedSummary[item.foodName]) {
-            updatedSummary[item.foodName].count -= item.quantity;
-            if (updatedSummary[item.foodName].count <= 0) {
-              delete updatedSummary[item.foodName]; // Remove item if count is zero
-            }
+  const handleOrderCountChange = (orderId, status) => {
+    const order = orders.find((o) => o.orderId === orderId);
+    if (order && (status === "completed" || status === "rejected")) {
+      const updatedSummary = { ...foodItemsSummary };
+      order.items.forEach((item) => {
+        if (updatedSummary[item.foodName]) {
+          updatedSummary[item.foodName].count -= item.quantity;
+          if (updatedSummary[item.foodName].count <= 0) {
+            delete updatedSummary[item.foodName]; // Remove item if count is zero
           }
-        });
-        setFoodItemsSummary(updatedSummary);
-      }
-    };
+        }
+      });
+      setFoodItemsSummary(updatedSummary);
+    }
 
-  // Filtered orders based on the search query
-  const filteredOrders = orders.filter((order) =>
-    order.items.some((item) =>
+    // Remove the order from the list if it is completed or rejected
+    if (status === "completed" || status === "rejected") {
+      setOrders((prevOrders) => prevOrders.filter((order) => order.orderId !== orderId));
+    }
+  };
+
+  const filteredOrders = orders.filter((order) => {
+    const matchesStatus = selectedStatus ? order.status === selectedStatus : true;
+    const matchesSearch = order.items.some((item) =>
       item.foodName.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
-
+    );
+    return matchesStatus && matchesSearch;
+  });
 
   const handleUpdateStatus = async (orderId, status) => {
     try {
       await axiosInstance.put("/api/v1/update-status", { orderId, status });
       console.log(`Order ${orderId} marked as ${status}`);
 
-            // Update the orders state to reflect the new status
-            setOrders((prevOrders) =>
-              prevOrders.map((order) =>
-                order.orderId === orderId ? { ...order, status } : order
-              )
-            );
-            // Decrement the count if status is rejected or completed
-            if (status === "rejected" || status === "completed") {
-              handleOrderCountChange(orderId);
-            }
+      // Update the orders state to reflect the new status
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.orderId === orderId ? { ...order, status } : order
+        )
+      );
 
+      // Only update the food items summary and remove card if the status is completed or rejected
+      if (status === "completed" || status === "rejected") {
+        handleOrderCountChange(orderId, status); // Update the food item summary
+      }
     } catch (error) {
       console.error(`Error marking order ${orderId} as ${status}`, error);
     }
@@ -104,6 +109,39 @@ function HomeScreen() {
           />
         </div>
 
+        {/* Filter dropdown for order status */}
+        {/* <div className="p-4">
+          <label htmlFor="status-filter" className="mr-2">Filter by Status:</label>
+          <select
+            id="status-filter"
+            value={selectedStatus}
+            onChange={(e) => setSelectedStatus(e.target.value)}
+            className="p-2 rounded-md"
+          >
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="accepted">Accepted</option>
+            <option value="prepared">Prepared</option>
+            
+            
+          </select>
+        </div> */}
+
+<div className="p-4">
+  <label htmlFor="status-filter" className="mr-2 text-lg font-semibold">Filter by Status:</label>
+  <select
+    id="status-filter"
+    value={selectedStatus}
+    onChange={(e) => setSelectedStatus(e.target.value)}
+    className="p-3 rounded-lg border-2 border-orange-400 bg-white text-orange-400 font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-orange-500 hover:bg-orange-100 transition ease-in-out duration-200"
+  >
+    <option value="">All</option>
+    <option value="pending">Pending</option>
+    <option value="accepted">Accepted</option>
+    <option value="prepared">Prepared</option>
+  </select>
+</div>
+
         <div className="flex">
           <div className="w-1/4 bg-orange-100 p-4">
             {Object.keys(foodItemsSummary).length > 0 ? (
@@ -127,13 +165,9 @@ function HomeScreen() {
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
                 <OrderCard
-
                   key={order.orderId} // Unique key for each order
                   order={order}
                   onUpdateStatus={handleUpdateStatus} // Pass the function directly
-
-                  onOrderCountChange={handleOrderCountChange} // Pass count change function
-
                 />
               ))
             ) : (

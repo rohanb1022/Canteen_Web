@@ -77,7 +77,7 @@ app.use('/app/api/v1', productRoutes);//
 app.use('/app/api/v1' , appProfileRoutes);//
 app.use('/app/api/v1' , appPaymentRoutes);//
 app.use("/app/api/v1" , fooditemRoutes)
-app.use('/app/api/tokens', tokenroutes);
+app.use('/app/api/v1', tokenroutes);
 app.use('/app/api/forgotpassword', forgotpass);
 app.use('/app/api/resetpassword', resetpass);
 

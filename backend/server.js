@@ -10,6 +10,7 @@ import { connectDB } from './config/db.js';
 
 //test
 //website Routes
+import specialDishRoutes from './routes/specialDish.route.js';
 import webStatisticsRoutes from './routes/statistics.route.js';
 import webProductRoutes from './routes/products.route.js';
 import webOrderHistoryRoutes from "./routes/orderHistory.route.js"
@@ -32,7 +33,6 @@ import protectRoute from './middleware/protectRoute.js';
 // import orderHistoryRoutes from './routes/ordersHistory.route.js';
 // import productRoutes from './routes/products.route.js';
 import updateStatus from './routes/orderRoutes.js';
-
 
 // Test routes
 import orderRoutes from './routes/test/order.route.js';
@@ -88,7 +88,7 @@ app.use('/api/v1', webViewOrderRoutes);
 app.use('/api/v1',  webOrderHistoryRoutes);
 app.use('/api/v1', webProductRoutes);
 app.use('/api/v1', updateStatus);
-
+app.use("/api/v1" , specialDishRoutes);
 // app.use('/api/v1', foodItemRoutes);
 // Test routes
 app.use('/api/orders', orderRoutes);//

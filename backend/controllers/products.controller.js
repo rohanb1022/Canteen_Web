@@ -1,5 +1,5 @@
 import {FoodItem } from '../models/foodItem.model.js'; // Import the food item model
-import { SpecialDish } from '../models/foodItem.model.js';
+import { SpecialDish } from '../models/specialDish.model.js';
 
 // Controller for adding a new food item
 export const addFoodItem = async (req, res) => {
@@ -82,25 +82,32 @@ export const updateProductAvailability = async (req, res) => {
   }
 };
 
-// Controller for adding special dish
-export const addSpecialDish = async (req , res) => {
-  const {name , price , description , img} = req.body;
+export const addSpecialDish = async (req, res) => { 
   try {
-    // checking all fields are present or not
-    if(!name || !price){
-      return res.status(400).json({message: 'Missing required fields'});
+    const { name, price, description, img } = req.body;
+    if(!name || !price) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide all required fields',
+      });
     }
-    // creating a new special dish
-    const specialDish = new SpecialDish({
+    const newSpecialDish = new SpecialDish({
       name,
       price,
       description,
-      img
+      img,
     });
-    // saving the special dish
-    await specialDish.save();
+    await newSpecialDish.save();
+    return res.status(201).json({
+      success: true,
+      message: 'Special dish added successfully',
+      data: newSpecialDish,
+    });
   } catch (error) {
-    console.log(error.message , "error is coming from special dish");
-    return res.status(500).json({message: 'Server error'});
-  }
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error. Failed to add special dish.',
+    });
+  }
 }

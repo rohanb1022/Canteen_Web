@@ -10,7 +10,6 @@ import { connectDB } from './config/db.js';
 
 //test
 //website Routes
-import specialDishRoutes from './routes/specialDish.route.js';
 import webStatisticsRoutes from './routes/statistics.route.js';
 import webProductRoutes from './routes/products.route.js';
 import webOrderHistoryRoutes from "./routes/orderHistory.route.js"
@@ -28,10 +27,6 @@ import tokenroutes from './routes/App/token.route.js';
 import forgotpass from './routes/App/forgotpass.route.js'
 import resetpass from './routes/App/resetpass.route.js';
 import protectRoute from './middleware/protectRoute.js';
-// import viewOrderRoutes from './routes/viewOrder.route.js';
-// import statisticsRoutes from './routes/statistics.route.js';
-// import orderHistoryRoutes from './routes/ordersHistory.route.js';
-// import productRoutes from './routes/products.route.js';
 import updateStatus from './routes/orderRoutes.js';
 
 // Test routes
@@ -64,32 +59,29 @@ app.use(cookieParser());
 
 // Set up routes
 app.use("/api/v1/auth", authRoutes);
+app.use('/api/v1' ,webStatisticsRoutes);
+app.use("/api/v1" ,webOrderHistoryRoutes)
+app.use("/api/v1" ,webProductRoutes)
+app.use("/api/v1" ,webViewOrderRoutes)
 
-app.use('/api/v1', webStatisticsRoutes);
-app.use("/api/v1" , webOrderHistoryRoutes)
-app.use("/api/v1" ,webProductRoutes )
-app.use("/api/v1" ,webViewOrderRoutes )
 // app routes
 app.use("/app/api/v1/auth" , appAuthRoutes)
-app.use('/app/api/v1', viewOrderRoutes); //
-app.use('/app/api/v1', orderHistoryRoutes);//
-app.use('/app/api/v1', productRoutes);//
-app.use('/app/api/v1' , appProfileRoutes);//
-app.use('/app/api/v1' , appPaymentRoutes);//
-app.use("/app/api/v1" , fooditemRoutes)
-app.use('/app/api/tokens', tokenroutes);
+app.use('/app/api/v1',       viewOrderRoutes); //
+app.use('/app/api/v1',       orderHistoryRoutes);//
+app.use('/app/api/v1',       productRoutes);//
+app.use('/app/api/v1' ,      appProfileRoutes);//
+app.use('/app/api/v1' ,      appPaymentRoutes);//
+app.use("/app/api/v1" ,      fooditemRoutes)
+app.use('/app/api/tokens',   tokenroutes);
 app.use('/app/api/forgotpassword', forgotpass);
 app.use('/app/api/resetpassword', resetpass);
-
 
 //website routes
 app.use('/api/v1', webStatisticsRoutes);
 app.use('/api/v1', webViewOrderRoutes); 
-app.use('/api/v1',  webOrderHistoryRoutes);
-app.use('/api/v1', webProductRoutes);
+app.use('/api/v1', webOrderHistoryRoutes);
 app.use('/api/v1', updateStatus);
-app.use("/api/v1" , specialDishRoutes);
-// app.use('/api/v1', foodItemRoutes);
+
 // Test routes
 app.use('/api/orders', orderRoutes);//
 app.use('/api/users', userRoutes);//

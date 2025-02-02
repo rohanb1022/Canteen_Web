@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
-import {axiosInstance} from '../lib/axios'; // Import axios instance
+import { axiosInstance } from '../lib/axios'; // Import axios instance
 import Product from '../components/Product';
 import Sidebar from '../components/Sidebar';
+import AddSpecialDishPopup from '../components/AddSpecialDishPopup'; // Import the pop-up component
 
 const Products = () => {
   const [dishes, setDishes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // State to handle pop-up visibility
 
   useEffect(() => {
     axiosInstance.get('/api/v1/products') // Use axios instance for the request
@@ -52,7 +54,15 @@ const Products = () => {
     <div className="flex h-screen">
       <Sidebar />
       <div className="flex-1 p-6 bg-gradient-to-b from-orange-100 via-orange-200 to-orange-300 ml-4">
-        <h1 className="text-3xl font-bold text-orange-500 mb-6">Product List</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-orange-500">Product List</h1>
+          <button
+            className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition"
+            onClick={() => setIsPopupOpen(true)}
+          >
+            + Add Special Dish
+          </button>
+        </div>
         <div className="mb-4">
           <input
             type="text"
@@ -72,6 +82,9 @@ const Products = () => {
           )}
         </div>
       </div>
+
+      {/* Add Special Dish Pop-up */}
+      {isPopupOpen && <AddSpecialDishPopup onClose={() => setIsPopupOpen(false)} />}
     </div>
   );
 };

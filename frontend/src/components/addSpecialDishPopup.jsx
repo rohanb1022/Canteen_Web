@@ -73,7 +73,6 @@ const AddSpecialDishPopup = ({ onClose, onDishAdded }) => { // Use onDishAdded t
             <button 
               type="submit" 
               className={`px-6 py-3 text-white rounded-lg text-lg ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
-
               disabled={loading}
             >
               {loading ? "Adding..." : "Add Dish"}

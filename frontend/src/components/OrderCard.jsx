@@ -5,8 +5,6 @@ function OrderCard({ order, onUpdateStatus }) {
   const [timeAgo, setTimeAgo] = useState("");
 
   useEffect(() => {
-
-    // Calculate the "time ago" string
     const calculateTimeAgo = () => {
       const now = new Date();
       const orderTime = new Date(order.orderDate);
@@ -53,63 +51,58 @@ function OrderCard({ order, onUpdateStatus }) {
       </p>
 
       <div className="flex flex-col h-full">
-      <div className="flex flex-col h-full">
-  {/* Display order items */}
-  <div className="flex-1 overflow-y-auto mt-4"> 
-    <ul className="list-none pl-5">
-      {order.items.map((item, index) => (
-        <li key={index} className="text-gray-700 text-xl font-bold">
-          {item.foodName} (x{item.quantity})
-        </li>
-      ))}
-    </ul>
-  </div>
+        <div className="flex-1 overflow-y-auto mt-4">
+          <ul className="list-none pl-5">
+            {order.items.map((item, index) => (
+              <li key={index} className="text-gray-700 text-xl font-bold">
+                {item.foodName} (x{item.quantity})
+              </li>
+            ))}
+          </ul>
+        </div>
 
-  {/* Buttons */}
-  <div className="mt-4 flex justify-center space-x-4 pt-4 border-t">
-    {orderStatus === "pending" && (
-      <>
-        <button
-          className="p-4 bg-green-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-green-500 transition"
-          onClick={() => handleStatus("accepted")}
-          aria-label="Accept order"
-        >
-          ✔
-        </button>
-        <button
-          className="p-4 bg-red-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-red-500 transition"
-          onClick={() => handleStatus("rejected")}
-          aria-label="Reject order"
-        >
-          ✖
-        </button>
-      </>
-    )}
+        {/* Buttons */}
+        <div className="mt-4 flex justify-center space-x-4 pt-4 border-t">
+          {orderStatus === "pending" && (
+            <>
+              <button
+                className="p-4 bg-green-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-green-500 transition"
+                onClick={() => handleStatus("accepted")}
+                aria-label="Accept order"
+              >
+                ✔
+              </button>
+              <button
+                className="p-4 bg-red-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-red-500 transition"
+                onClick={() => handleStatus("rejected")}
+                aria-label="Reject order"
+              >
+                ✖
+              </button>
+            </>
+          )}
 
-    {(orderStatus === "accepted" || orderStatus === "prepared") && (
-      <button
-        className="p-4 bg-yellow-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-yellow-500 transition"
-        onClick={() => handleStatus("prepared")}
-        aria-label="Mark as prepared"
-      >
-        🔔
-      </button>
-    )}
+          {orderStatus === "accepted" && (
+            <button
+              className="p-4 bg-yellow-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-yellow-500 transition"
+              onClick={() => handleStatus("prepared")}
+              aria-label="Mark as prepared"
+            >
+              🔔
+            </button>
+          )}
 
-    {orderStatus === "prepared" && (
-      <button
-        className="p-4 bg-green-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-green-500 transition"
-        onClick={() => handleStatus("completed")}
-        aria-label="Mark as completed"
-      >
-        ✔
-      </button>
-    )}
-  </div>
-</div>
-
-</div>
-
+          {orderStatus === "prepared" && (
+            <button
+              className="p-4 bg-green-400 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-green-500 transition"
+              onClick={() => handleStatus("completed")}
+              aria-label="Mark as completed"
+            >
+              ✔
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

@@ -41,4 +41,6 @@ const foodItemSchema = new mongoose.Schema({
 });
 
 
+
 export const FoodItem = mongoose.model('FoodItem', foodItemSchema);
+

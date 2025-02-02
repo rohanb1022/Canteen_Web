@@ -22,4 +22,3 @@ const addSpecialDishSchema = new mongoose.Schema({
   })
 
 export const SpecialDish = mongoose.model('SpecialDish', addSpecialDishSchema);
-

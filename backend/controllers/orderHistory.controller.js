@@ -1,40 +1,54 @@
-import Order from '../models/order.model.js';
+
+
+
+import Order from "../models/order.model.js";
 
 export const getOrderHistory = async (req, res) => {
   try {
-    // Fetch orders and populate user details (username and email)
-    const orders = await Order.find()
-      .populate('userId', 'username email')  // Populate user details: username and email
-      .sort({ orderDate: -1 });  // Sort orders by order date (newest first)
+    const { page = 1, limit = 10, status } = req.query;
+
+    // Build query
+    const query = status ? { status } : {};
+
+    // Fetch orders and populate user details
+    const orders = await Order.find(query)
+      .populate("userId", "username email")
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit))
+      .sort({ orderDate: -1 });
+
+    const totalOrders = await Order.countDocuments(query); // Get total order count for pagination
+    const totalPages = Math.ceil(totalOrders / limit); // Calculate total pages
 
     // Map the fetched orders to include order number, status, user info, and totalAmount
-    const orderHistory = orders.map(order => {
-      // Check if order.userId is populated
+    const orderHistory = orders.map((order) => {
       if (!order.userId) {
         return {
-          orderNo: order._id,  // Use order ID as the order number
-          status: order.status,  // Order status (pending, completed, cancelled)
-          userName: 'N/A',  // Default if no userId
-          email: 'N/A',  // Default if no userId
-          totalAmount: order.totalAmount,  // Total amount of the order
-          createdAt: order.orderDate  // The date when the order was placed
+          orderNo: order._id,
+          status: order.status,
+          userName: "N/A",
+          email: "N/A",
+          totalAmount: order.totalAmount,
+          createdAt: order.orderDate,
         };
       }
 
       return {
-        orderNo: order._id,  // Use order ID as the order number
-        status: order.status,  // Order status (pending, completed, cancelled)
-        userName: order.userId.username,  // User's username
-        email: order.userId.email,  // User's email
-        totalAmount: order.totalAmount,  // Total amount of the order
-        createdAt: order.orderDate  // The date when the order was placed
+        orderNo: order._id,
+        status: order.status,
+        userName: order.userId.username,
+        email: order.userId.email,
+        totalAmount: order.totalAmount,
+        createdAt: order.orderDate,
       };
     });
 
-    // Respond with the formatted order history
-    res.json(orderHistory);
+    res.json({
+      orders: orderHistory,
+      totalPages: totalPages,
+    });
   } catch (error) {
-    console.error(error);  // Log error for debugging
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };

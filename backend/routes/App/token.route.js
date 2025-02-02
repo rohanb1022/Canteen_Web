@@ -1,40 +1,38 @@
 import express from 'express';
-import Token from '../../models/token.model.js';
+import Order from '../../models/order.model.js';
 
 const router = express.Router();
 
-// Function to generate a random 4-character alphanumeric token
-const generateRandomToken = () => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let token = '';
-  for (let i = 0; i < 4; i++) {
-    token += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return token;
-};
 
-// Route to generate and store a unique token
-router.get('/generatetoken', async (req, res) => {
+// Route to send token
+router.post('/generatetoken',async (req, res) => {
+  //need to work on this.
   try {
-    let token;
-    let exists = true;
+    const { userId } = req.body;
 
-    // Keep generating tokens until we find a unique one
-    while (exists) {
-      token = generateRandomToken();
-      const existingToken = await Token.findOne({ token });
-      if (!existingToken) exists = false;
+    if (!userId) {
+      return res.status(400).json({ success: false, message: "User ID is required" });
     }
 
-    // Save the token in the database
-    const newToken = new Token({ token });
-    await newToken.save();
+    // Find the latest order for the given userId
+    const order = await Order.findOne({ userId }).sort({ orderDate: -1 });
 
-    res.status(201).json({ message: 'Token generated successfully', token });
+    if (!order) {
+      return res.status(404).json({ success: false, message: "No orders found for this user" });
+    }
+
+    // Extract only the last 4 characters of orderId (_id)
+    const shortOrderId = order._id.toString().slice(-4);
+
+    res.status(200).json({
+      success: true,
+      orderId: shortOrderId
+    });
+
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
+  
 });
 
 export default router;

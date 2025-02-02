@@ -1,6 +1,5 @@
 import express from 'express';
-import { getFoodItems , addFoodItem , updateProductAvailability, addSpecialDish} from '../controllers/products.controller.js'; 
-import { getFoodItems , addFoodItem , updateProductAvailability, addSpecialDish} from '../controllers/products.controller.js'; 
+import { getFoodItems , addFoodItem , updateProductAvailability, addSpecialDish} from '../controllers/products.controller.js';
 import protectRoute from '../middleware/protectRoute.js';
 
 const router = express.Router();

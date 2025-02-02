@@ -108,6 +108,6 @@ export const addSpecialDish = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Server error. Failed to add special dish.',
-    });
-  }
+    });
+  }
 }

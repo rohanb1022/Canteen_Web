@@ -1,7 +1,7 @@
 import AppUser from "../../models/appuser.model.js";
 
 export const getOrderHistory = async (req , res) => {
-    const studentId = req.user._id;
+    const studentId = req.params.userId;
     try {
         const student = AppUser.findById(studentId);
         if(!student){

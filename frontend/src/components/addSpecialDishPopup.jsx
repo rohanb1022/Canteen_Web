@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { axiosInstance } from '../lib/axios'; // Import axios instance
 import {toast} from 'react-hot-toast';
-
-
 const AddSpecialDishPopup = ({ onClose, onDishAdded }) => { // Use onDishAdded to update UI
   const [dishName, setDishName] = useState('');
   const [price, setPrice] = useState('');

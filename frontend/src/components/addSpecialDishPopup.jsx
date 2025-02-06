@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { axiosInstance } from '../lib/axios'; // Import axios instance
-import {toast} from 'react-hot-toast';
+
 const AddSpecialDishPopup = ({ onClose, onDishAdded }) => { // Use onDishAdded to update UI
   const [dishName, setDishName] = useState('');
   const [price, setPrice] = useState('');
@@ -17,18 +17,18 @@ const AddSpecialDishPopup = ({ onClose, onDishAdded }) => { // Use onDishAdded t
       const response = await axiosInstance.post('/api/v1/addSpecialDish', newDish);
       
       if (response.data.success) {
-        toast.success('Special dish added successfully!');
+        alert('Special dish added successfully!');
         onDishAdded(response.data.dish); // Update UI
         setDishName('');
         setPrice('');
         setCategory('Uncategorized');
         onClose();
       } else {
-        toast.error('Failed to add special dish.');
+        alert('Failed to add special dish.');
       }
     } catch (error) {
       console.error('Error adding dish:', error);
-      
+      alert('Server error! Try again later.');
     }
     
     setLoading(false);

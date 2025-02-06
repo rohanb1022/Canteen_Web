@@ -29,7 +29,7 @@ import resetpass from './routes/App/resetpass.route.js';
 import protectRoute from './middleware/protectRoute.js';
 import updateStatus from './routes/orderRoutes.js';
 import updateOrderStatusRoute  from './routes/updateOrderStatus.route.js';
-// import { getOrderStatus } from './controllers/orderStatus.controller.js';
+import { getOrderStatus } from './controllers/orderStatus.controller.js';
 import getOrderStatusRoutes from './routes/App/getOrderStatus.route.js'
 
 
@@ -65,8 +65,8 @@ app.get('/app/api/v1/test', (req, res) => {
   res.send('Test route is working');
 });
 
-// App routes should come after this
-app.use('/app/api/v1', getOrderStatusRoutes);
+
+
 // Set up routes
 app.use("/api/v1/auth", authRoutes);
 app.use('/api/v1' ,webStatisticsRoutes);
@@ -86,6 +86,7 @@ app.use('/app/api/v1', tokenroutes);
 app.use('/app/api/forgotpassword', forgotpass);
 app.use('/app/api/resetpassword', resetpass);
 app.use('/app/api/v1', getOrderStatusRoutes);  // Mount the route correctly
+
 
 //website routes
 app.use('/api/v1', webStatisticsRoutes);

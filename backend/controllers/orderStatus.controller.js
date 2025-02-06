@@ -49,16 +49,17 @@ export const updateOrderStatus = async (req, res) => {
 
 export const getOrderStatus = async (req, res) => {
   try {
-    const { orderId } = req.params.id;
+    const { orderId } = req.params;
+    //console.log(req.params);
 
-    const order = await Order.findById(orderId);
+    const order = await Order.findById(orderId).select('status');
 
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    res.status(200).json({ order });
+    res.status(200).json({ status: order.status});
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: `Server error`, error: error.message });
   }
 };

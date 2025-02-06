@@ -38,7 +38,7 @@ function HomeScreen() {
   useEffect(() => {
     const interval = setInterval(() => {
       window.location.reload(); // Refreshes the page
-    }, 3000); // 3000 milliseconds = 3 seconds
+    }, 30000); // 3000 milliseconds = 3 seconds
 
     // Clean up the interval on component unmount
     return () => clearInterval(interval);

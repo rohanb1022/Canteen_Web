@@ -28,6 +28,7 @@ const AddSpecialDishPopup = ({ onClose, onDishAdded }) => { // Use onDishAdded t
       }
     } catch (error) {
       console.error('Error adding dish:', error);
+      
     }
     
     setLoading(false);

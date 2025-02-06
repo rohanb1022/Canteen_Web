@@ -28,6 +28,10 @@ import forgotpass from './routes/App/forgotpass.route.js'
 import resetpass from './routes/App/resetpass.route.js';
 import protectRoute from './middleware/protectRoute.js';
 import updateStatus from './routes/orderRoutes.js';
+import updateOrderStatusRoute  from './routes/updateOrderStatus.route.js';
+// import { getOrderStatus } from './controllers/orderStatus.controller.js';
+import getOrderStatusRoutes from './routes/App/getOrderStatus.route.js'
+
 
 // Test routes
 import orderRoutes from './routes/test/order.route.js';
@@ -57,6 +61,12 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+app.get('/app/api/v1/test', (req, res) => {
+  res.send('Test route is working');
+});
+
+// App routes should come after this
+app.use('/app/api/v1', getOrderStatusRoutes);
 // Set up routes
 app.use("/api/v1/auth", authRoutes);
 app.use('/api/v1' ,webStatisticsRoutes);
@@ -75,12 +85,14 @@ app.use("/app/api/v1" , fooditemRoutes)
 app.use('/app/api/v1', tokenroutes);
 app.use('/app/api/forgotpassword', forgotpass);
 app.use('/app/api/resetpassword', resetpass);
+app.use('/app/api/v1', getOrderStatusRoutes);  // Mount the route correctly
 
 //website routes
 app.use('/api/v1', webStatisticsRoutes);
 app.use('/api/v1', webViewOrderRoutes); 
 app.use('/api/v1', webOrderHistoryRoutes);
 app.use('/api/v1', updateStatus);
+app.use("/api/v1", updateOrderStatusRoute);
 
 // Test routes
 app.use('/api/orders', orderRoutes);//

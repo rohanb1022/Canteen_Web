@@ -22,6 +22,7 @@
 //   }
 // };
 
+
 import Order from '../models/order.model.js';
 
 export const updateOrderStatus = async (req, res) => {
@@ -41,6 +42,22 @@ export const updateOrderStatus = async (req, res) => {
     }
 
     res.status(200).json({ message: `Order ${orderId} updated to ${status}`, order: updatedOrder });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+export const getOrderStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params.id;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    res.status(200).json({ order });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

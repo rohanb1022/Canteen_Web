@@ -35,6 +35,14 @@ function HomeScreen() {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      window.location.reload(); // Refreshes the page
+    }, 3000); // 3000 milliseconds = 3 seconds
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   const handleOrderCountChange = (orderId, status) => {
     const order = orders.find((o) => o.orderId === orderId);

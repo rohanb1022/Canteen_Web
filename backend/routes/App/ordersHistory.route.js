@@ -4,6 +4,6 @@ import protectRoute from '../../middleware/App/protectRoute.js';
 const router = express.Router();
 
 // Route for fetching order history
-router.get('/order-history/:userId' , protectRoute , getOrderHistory);
+router.get('/order-history/:userId' ,getOrderHistory);
 
 export default router;

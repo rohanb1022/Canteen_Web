@@ -1,4 +1,4 @@
-import FoodItem from '../../models/foodItem.model.js'; // Import the FoodItem model
+import {FoodItem} from '../../models/foodItem.model.js'; // Import the FoodItem model
 
 // Controller for creating a new food item
 export const createFoodItem = async (req, res) => {

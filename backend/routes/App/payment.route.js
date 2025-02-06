@@ -5,8 +5,8 @@ import crypto from 'crypto';
 const router = express.Router();
 // Initialize Razorpay instance
 const razorpay = new Razorpay({
-  key_id: 'rzp_test_kNTNMzLSu9RLNK', // Replace with your Razorpay key ID
-  key_secret: 'bw8RYAX3Jndu212nhwDOKvv0', // Replace with your Razorpay key secret
+  key_id: 'rzp_test_qJLabrBReNvJWY', // Replace with your Razorpay key ID
+  key_secret: 'cOpqWjvYVxdKptwB7yt8apDN', // Replace with your Razorpay key secret
 });
 
 // Route to create an order

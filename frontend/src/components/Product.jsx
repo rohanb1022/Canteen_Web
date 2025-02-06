@@ -1,37 +1,18 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types'; // Adding PropTypes for better clarity
-import {axiosInstance} from '../lib/axios'; // Import axios instance
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { axiosInstance } from '../lib/axios';
 
-const Product = ({ product, updateAvailability }) => {
-  const [isAvailable, setIsAvailable] = useState(product.availability);
+const Product = ({ product, removeSpecialDish }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  // Function to handle the click and update both frontend and backend
-  const toggleAvailability = async () => {
-    const updatedStatus = !isAvailable;
-    setIsAvailable(updatedStatus);
+  // Function to delete the special dish when clicked on "Available"
+  const deleteSpecialDish = async () => {
     setIsLoading(true);
-    setError(null);
-
-    // Update the backend with the new availability status using axiosInstance
     try {
-      const response = await axiosInstance.put(`/api/v1/products/${product._id}`, {
-        availability: updatedStatus,
-      });
-
-      const data = response.data;
-      if (!data.success) {
-        throw new Error('Failed to update product availability');
-      }
-
-      // Optionally, trigger a callback function to refresh product data in the parent component (Products page)
-      updateAvailability(product._id, updatedStatus);
+      await axiosInstance.delete(`/api/v1/removeSpecialDish/${product._id}`); // Send DELETE request
+      removeSpecialDish(product._id); // Remove it from the UI after successful deletion
     } catch (error) {
-      console.error('Error updating product availability:', error);
-      setError('Failed to update availability. Please try again.');
-      // Optionally, revert to previous state if the backend update fails
-      setIsAvailable(!updatedStatus);
+      console.error('Error deleting special dish:', error);
     } finally {
       setIsLoading(false);
     }
@@ -49,29 +30,26 @@ const Product = ({ product, updateAvailability }) => {
         <span className="text-xl font-bold text-orange-500">₹{product.price}</span>
       </div>
       <div className="mt-4">
-        {error && <p className="text-red-500 text-sm">{error}</p>} {/* Display error message */}
         <button
-          onClick={toggleAvailability}
-          className={`px-4 py-2 rounded-lg ${isAvailable ? 'bg-green-500' : 'bg-gray-400'} ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={isLoading} // Disable button while loading
+          onClick={deleteSpecialDish} // Call deleteSpecialDish on button click
+          className={`px-4 py-2 rounded-lg ${isLoading ? 'bg-gray-400' : 'bg-green-500'} ${isLoading ? 'cursor-not-allowed' : ''}`}
+          disabled={isLoading}
         >
-          {isLoading ? 'Updating...' : isAvailable ? 'Available' : 'Unavailable'}
+          {isLoading ? 'Deleting...' : 'Available'}
         </button>
       </div>
     </div>
   );
 };
 
-// PropTypes for the Product component
 Product.propTypes = {
   product: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    availability: PropTypes.bool.isRequired,
     img: PropTypes.string,
   }).isRequired,
-  updateAvailability: PropTypes.func.isRequired,
+  removeSpecialDish: PropTypes.func.isRequired,
 };
 
 export default Product;

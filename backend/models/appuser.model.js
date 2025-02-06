@@ -24,8 +24,10 @@ const AppUserSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
-});
+  },
+  otp: { type: String },
+  otpExpires: { type: Date },
+}, { timestamps: true });
 
 const AppUser = mongoose.models.AppUser || mongoose.model('AppUser', AppUserSchema);
 export default AppUser;

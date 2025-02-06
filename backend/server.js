@@ -3,12 +3,12 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import cors from 'cors';
 
-
+//test
 import authRoutes from './routes/auth.route.js';
 import { ENV_VARS } from './config/envVars.js';
 import { connectDB } from './config/db.js';
 
-
+//test
 //website Routes
 import webStatisticsRoutes from './routes/statistics.route.js';
 import webProductRoutes from './routes/products.route.js';
@@ -23,13 +23,14 @@ import appAuthRoutes from "./routes/App/auth.route.js"
 import appProfileRoutes from './routes/App/profile.route.js';
 import appPaymentRoutes from './routes/App/payment.route.js';
 import fooditemRoutes from './routes/App/FoodItem.route.js';
-
+import tokenroutes from './routes/App/token.route.js';
+import forgotpass from './routes/App/forgotpass.route.js'
+import resetpass from './routes/App/resetpass.route.js';
 import protectRoute from './middleware/protectRoute.js';
-import viewOrderRoutes from './routes/viewOrder.route.js';
-import statisticsRoutes from './routes/statistics.route.js';
-import orderHistoryRoutes from './routes/ordersHistory.route.js';
-import productRoutes from './routes/products.route.js';
 import updateStatus from './routes/orderRoutes.js';
+import updateOrderStatusRoute  from './routes/updateOrderStatus.route.js';
+import { getOrderStatus } from './controllers/orderStatus.controller.js';
+import getOrderStatusRoutes from './routes/App/getOrderStatus.route.js'
 
 
 // Test routes
@@ -60,13 +61,19 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+app.get('/app/api/v1/test', (req, res) => {
+  res.send('Test route is working');
+});
+
+
+
 // Set up routes
 app.use("/api/v1/auth", authRoutes);
+app.use('/api/v1' ,webStatisticsRoutes);
+app.use("/api/v1" ,webOrderHistoryRoutes)
+app.use("/api/v1" ,webProductRoutes)
+app.use("/api/v1" ,webViewOrderRoutes)
 
-app.use('/api/v1', webStatisticsRoutes);
-app.use("/api/v1" , webOrderHistoryRoutes)
-app.use("/api/v1" ,webProductRoutes )
-app.use("/api/v1" ,webViewOrderRoutes )
 // app routes
 app.use("/app/api/v1/auth" , appAuthRoutes)
 app.use('/app/api/v1', viewOrderRoutes); //
@@ -75,16 +82,19 @@ app.use('/app/api/v1', productRoutes);//
 app.use('/app/api/v1' , appProfileRoutes);//
 app.use('/app/api/v1' , appPaymentRoutes);//
 app.use("/app/api/v1" , fooditemRoutes)
+app.use('/app/api/v1', tokenroutes);
+app.use('/app/api/forgotpassword', forgotpass);
+app.use('/app/api/resetpassword', resetpass);
+app.use('/app/api/v1', getOrderStatusRoutes);  // Mount the route correctly
 
 
 //website routes
-app.use('/api/v1', statisticsRoutes);
-app.use('/api/v1', viewOrderRoutes); 
-app.use('/api/v1', orderHistoryRoutes);
-app.use('/api/v1', productRoutes);
+app.use('/api/v1', webStatisticsRoutes);
+app.use('/api/v1', webViewOrderRoutes); 
+app.use('/api/v1', webOrderHistoryRoutes);
 app.use('/api/v1', updateStatus);
+app.use("/api/v1", updateOrderStatusRoute);
 
-// app.use('/api/v1', foodItemRoutes);
 // Test routes
 app.use('/api/orders', orderRoutes);//
 app.use('/api/users', userRoutes);//

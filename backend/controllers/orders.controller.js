@@ -42,7 +42,7 @@ import Order from '../models/order.model.js';
 export const getOrderCards = async (req, res) => {
   try {
     // Fetch orders that are not completed or rejected
-    const orders = await Order.find({ status: { $in: ["pending", "Ongoing" , "completed" , "accepted" , "rejected" , "prepared"] } })
+    const orders = await Order.find({ status: { $nin: ['completed', 'rejected'] } })
       .populate('userId', 'username email') // Populate user details
       .populate({
         path: 'foodItems.foodItemId',

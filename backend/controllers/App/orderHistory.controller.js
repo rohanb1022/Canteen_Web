@@ -14,7 +14,7 @@ export const getOrderHistory = async (req, res) => {
         // Fetch only completed orders for the user
         const completedOrders = await Order.find({ 
             userId: userId, 
-            status: 'completed' // Fetch only completed orders
+            status: { $in: ['pending', 'completed', 'accepted', 'rejected', 'prepared'] }  // Fetch only completed orders
         })
         .populate('userId', 'username email') // Populate user details
         .populate({

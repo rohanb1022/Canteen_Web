@@ -68,7 +68,7 @@ export const getOrderByUserId = async(req, res) => {
     const { userId } = req.params;
 
     // Find the latest ongoing order for the user
-    const latestOrder = await Order.findOne({ userId, status: { $in: ["pending", "Ongoing"] } })
+    const latestOrder = await Order.findOne({ userId, status: { $in: ["pending", "Ongoing" , "completed" , "accepted" , "rejected" , "prepared"] } })
         .sort({ createdAt: -1 }) // Sort by latest order
         .select("orderId status");
 

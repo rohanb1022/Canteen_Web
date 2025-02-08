@@ -92,7 +92,7 @@ export const getOrderStatus = async (req, res) => {
       })),
       status: order.status
     });
-
+//
   } catch (error) {
     console.error("Error fetching order:", error); // Log error details
     res.status(500).json({ message: 'Server error', error: error.message });

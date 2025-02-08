@@ -21,8 +21,8 @@ router.post('/generatetoken',async (req, res) => {
       return res.status(404).json({ success: false, message: "No orders found for this user" });
     }
 
-    // Extract only the last 4 characters of orderId (_id)
-    const shortOrderId = order._id.toString().slice(-4);
+    // Extract characters of orderId (_id)
+    const shortOrderId = order._id.toString();
 
     res.status(200).json({
       success: true,

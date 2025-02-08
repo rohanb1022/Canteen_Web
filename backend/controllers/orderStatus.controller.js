@@ -1,4 +1,6 @@
 import Order from '../models/order.model.js';
+import AppUser from '../models/appuser.model.js';
+import { FoodItem } from '../models/foodItem.model.js';
 
 // export const updateOrderStatus = async (req, res) => {
 //   try {
@@ -45,20 +47,55 @@ export const updateOrderStatus = async (req, res) => {
   }
 };
 
+// export const getOrderStatus = async (req, res) => {
+//   try {
+//     const { orderId } = req.params;
+//     //console.log(req.params);
+
+//     const order = await Order.findById(orderId);
+
+//     if (!order) {
+//       return res.status(404).json({ message: 'Order not found' });
+//     }
+
+//     res.status(200).json({ status: order.status});
+//   } catch (error) {
+//     res.status(500).json({ message: `Server error`, error: error.message });
+//   }
+// };
+
+
 export const getOrderStatus = async (req, res) => {
   try {
     const { orderId } = req.params;
-    //console.log(req.params);
+    
 
-    const order = await Order.findById(orderId).select('status');
+    const order = await Order.findById(orderId)
+      .populate('foodItems.foodItemId', 'name')
+      .lean(); // Convert Mongoose object to plain JSON for debugging
+
+     // Log entire order object
 
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    res.status(200).json({ status: order.status});
+    res.status(200).json({
+      orderId: order._id,
+      date: order.orderDate.toISOString().split('T')[0], // Extract date
+      time: order.orderDate.toISOString().split('T')[1].split('.')[0], // Extract time
+      items: order.foodItems.map(item => ({
+        itemId: item.foodItemId._id,
+        name: item.foodItemId.name, // Food item name
+        quantity: item.quantity,
+        price: item.price
+      })),
+      status: order.status
+    });
+
   } catch (error) {
-    res.status(500).json({ message: `Server error`, error: error.message });
+    console.error("Error fetching order:", error); // Log error details
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 

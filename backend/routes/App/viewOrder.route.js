@@ -1,5 +1,5 @@
 import express from 'express';
-import { getOrderCards } from '../../controllers/orders.controller.js'; 
+import { getOrderCards } from '../../controllers/App/getOrderCard.controller.js'; 
 import protectRoute from '../../middleware/App/protectRoute.js';
 import { getOrderStatus } from '../../controllers/orderStatus.controller.js';
 

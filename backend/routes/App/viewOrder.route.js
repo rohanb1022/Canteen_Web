@@ -7,6 +7,6 @@ const router = express.Router();
 
 // Route for fetching orders in card format
 // router.get('/view-orders',protectRoute ,  getOrderCards);
-router.get('/view-orders/:userId',  getOrderCards);
+router.get('/view-orders/:userId', getOrderCards);
 
 export default router;

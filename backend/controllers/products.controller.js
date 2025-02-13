@@ -251,85 +251,37 @@ export const updateProductAvailability = async (req, res) => {
 };
 
 // Controller for adding special dish
-export const addSpecialDish = async (req, res) => { 
+// Controller for fetching a single food item by ID
+export const getFoodItemById = async (req, res) => {
   try {
-    const { name, price, description, img } = req.body;
-    if(!name || !price) {
-      return res.status(400).json({
-        success: false,
-        message: 'Please provide all required fields',
-      });
-    }
-    const newSpecialDish = new SpecialDish({
-      name,
-      price,
-      description,
-      img,
-    });
-    await newSpecialDish.save();
-    return res.status(201).json({
-      success: true,
-      message: 'Special dish added successfully',
-      data: newSpecialDish,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: 'Server error. Failed to add special dish.',
-    });
-  }
-};
+    const { id } = req.params;
+    const foodItem = await FoodItem.findById(id); // Fetch food item from DB
 
-// Controller for fetching all special dishes with pagination
-export const getSpecialDishes = async (req, res) => {
-  try {
-    const { page = 1, limit = 8 } = req.query; // Default to page 1, limit 10
-    const skip = (page - 1) * limit; // Calculate the number of items to skip
-
-    const specialDishes = await SpecialDish.find()
-      .skip(skip)
-      .limit(parseInt(limit)); // Limit the number of special dishes returned
-
-    const totalItems = await SpecialDish.countDocuments(); // Get total number of special dishes
-
-    res.status(200).json({
-      success: true,
-      data: specialDishes,
-      totalPages: Math.ceil(totalItems / limit), // Calculate total pages
-      currentPage: parseInt(page), // Return the current page
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: 'Server error. Failed to fetch special dishes.',
-    });
-  }
-};
-
-// Controller for removing special dish
-export const removeSpecialDish = async (req , res) => {
-  try {
-    const specialDishId = req.params.id; // Get the special dish ID
-    const specialDish = await SpecialDish.findByIdAndDelete(specialDishId); // Delete the special dish
-
-    if (!specialDish) {
+    if (!foodItem) {
       return res.status(404).json({
         success: false,
-        message: 'Special dish not found',
+        message: 'Food item not found',
       });
     }
 
-    res.status(200).json({
-      success: true,
-      message: 'Special dish deleted successfully',
-    });
-  } catch (error) { 
+    res.status(200).json(foodItem); // Send food item data
+  } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: 'Server error. Failed to delete special dish.',
+      message: 'Server error. Failed to fetch food item.',
     });
   }
 };
+
+export const makeSpecialDish = async (req , res) => {
+  try {
+    const dishId = req.params.id;   // we will fetch the id of the dish which we want to make special
+    const specialDetail = req.body; // storing the detail of the dish which is making it special
+
+        
+
+  } catch (error) {
+    
+  }
+}

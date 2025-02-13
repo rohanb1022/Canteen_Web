@@ -26,7 +26,8 @@ const foodItemSchema = new mongoose.Schema({
   },
   img: {
     type: String,  // This field will store the image URL or path
-    required: false
+    required: false,
+    default : "https://images.unsplash.com/photo-1519077336050-4ca5cac9d64f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   rating: {
     type: Number,
@@ -37,10 +38,12 @@ const foodItemSchema = new mongoose.Schema({
     type: String,
     required: true,
     default: "uncategorized",
+  },
+  special : {
+    type : String,
+    required : false,
   }
 });
-
-
 
 export const FoodItem = mongoose.model('FoodItem', foodItemSchema);
 

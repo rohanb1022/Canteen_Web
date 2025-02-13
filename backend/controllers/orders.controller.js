@@ -41,17 +41,12 @@ import Order from '../models/order.model.js';
 
 export const getOrderCards = async (req, res) => {
   try {
-    // Fetch orders for a specific user by userId and exclude completed or rejected orders
-    const userId = req.params.userId;  // Extract userId from the request parameters
-
-    const orders = await Order.find({ 
-      userId: userId, // Filter orders by userId
-      status: { $nin: ['completed', 'rejected'] } // Exclude completed and rejected orders
-    })
+    // Fetch orders that are not completed or rejected
+    const orders = await Order.find({ status: { $nin: ['completed', 'rejected'] } })
       .populate('userId', 'username email') // Populate user details
       .populate({
         path: 'foodItems.foodItemId',
-        select: 'name price' // Populate food item details
+        select: 'name price'
       })
       .sort({ createdAt: -1 }); // Sort by creation date
 

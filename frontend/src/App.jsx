@@ -10,6 +10,7 @@ import Products from "./pages/products"
 import Statistics from "./pages/statistics"
 import  { Toaster } from "react-hot-toast"; // Import Toaster
 import AddDishPopup from "./components/AddDishPopup"
+import OrdersDisplay from "./pages/preparedOrders"
 
 const App = () => {
   
@@ -26,7 +27,8 @@ const App = () => {
           <Route path="/product" element={<Products />}/>
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/specialdish" element={<AddDishPopup />} />
-          
+          <Route path="/prepared-orders" element={<OrdersDisplay />} />
+
         </Routes>
       </div>
     </>

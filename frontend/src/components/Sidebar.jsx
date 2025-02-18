@@ -59,6 +59,15 @@ const Sidebar = () => {
               <span>Products</span>
             </button>
           </li>
+          <li>
+            <button
+              onClick={() => navigate("/prepared-orders")}
+              className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-orange-100 rounded-lg"
+            >
+              <CubeIcon className="h-6 w-6 text-gray-500 mr-3" />
+              <span>Currently Serving</span>
+            </button>
+          </li>
         </ul>
       </nav>
 

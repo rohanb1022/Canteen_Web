@@ -274,14 +274,22 @@ export const getFoodItemById = async (req, res) => {
   }
 };
 
+//controller for making dish special
 export const makeSpecialDish = async (req , res) => {
   try {
     const dishId = req.params.id;   // we will fetch the id of the dish which we want to make special
     const specialDetail = req.body; // storing the detail of the dish which is making it special
-
-        
-
+    if(dishId && specialDetail){  // if the special detail is empty it will give error
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide all required fields'
+      })
+    }
+    const updateDish = await FoodItem.findByIdAndUpdate(dishId, {special : specialDetail}, { new: true });
   } catch (error) {
-    
+    return res.status(500).json({
+      success: false,
+      message: 'Server error. Failed to make dish special.',
+    });
   }
 }

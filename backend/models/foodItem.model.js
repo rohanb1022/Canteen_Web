@@ -40,9 +40,13 @@ const foodItemSchema = new mongoose.Schema({
     default: "uncategorized",
   },
   special : {
-    type : String,
-    required : false,
-  }
+      dishName : {
+        type : String
+      },
+      price : {
+        type : Number
+      },
+    }
 });
 
 export const FoodItem = mongoose.model('FoodItem', foodItemSchema);

@@ -14,6 +14,8 @@ import webStatisticsRoutes from './routes/statistics.route.js';
 import webProductRoutes from './routes/products.route.js';
 import webOrderHistoryRoutes from "./routes/orderHistory.route.js"
 import webViewOrderRoutes from "./routes/viewOrder.route.js"
+import updateOrderStatusRoute  from './routes/updateOrderStatus.route.js';
+import orderRoute from "./routes/orderRoutes.js";
 
 //App routes
 import viewOrderRoutes from './routes/App/viewOrder.route.js';
@@ -28,7 +30,6 @@ import forgotpass from './routes/App/forgotpass.route.js'
 import resetpass from './routes/App/resetpass.route.js';
 import protectRoute from './middleware/protectRoute.js';
 import updateStatus from './routes/orderRoutes.js';
-import updateOrderStatusRoute  from './routes/updateOrderStatus.route.js';
 import { getOrderStatus } from './controllers/orderStatus.controller.js';
 import getOrderStatusRoutes from './routes/App/getOrderStatus.route.js'
 
@@ -94,6 +95,7 @@ app.use('/api/v1', webViewOrderRoutes);
 app.use('/api/v1', webOrderHistoryRoutes);
 app.use('/api/v1', updateStatus);
 app.use("/api/v1", updateOrderStatusRoute);
+app.use("/api/v1" , orderRoute);
 
 // Test routes
 app.use('/api/orders', orderRoutes);//

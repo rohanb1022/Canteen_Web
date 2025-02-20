@@ -16,9 +16,15 @@ const Products = () => {
   const itemsPerPage = 8;
 
   useEffect(() => {
-    const fetchData = async () => { 
+    /**
+     * Fetches products from the backend API.
+     * Updates the state with the fetched data and number of pages.
+     * @param {number} page - The page number to fetch.
+     * @param {number} limit - The number of items per page.
+     */
+    const fetchData = async (page = 1, limit = itemsPerPage) => {
       try {
-        const response = await axiosInstance.get(`/api/v1/products?page=${currentPage}&limit=${itemsPerPage}`);
+        const response = await axiosInstance.get(`/api/v1/products?page=${page}&limit=${limit}`);
         setProducts(response.data.data || []);
         setTotalPages(response.data.totalPages);
       } catch (err) {

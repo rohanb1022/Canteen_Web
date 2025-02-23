@@ -11,10 +11,10 @@
 //             return res.status(400).json({ message: "User not found" });
 //         }
 
-//         // Fetch only completed orders for the user
+//         // Fetch only completed/rejected orders for the user
 //         const completedOrders = await Order.find({ 
 //             userId: userId, 
-//             status: { $in: ['completed'] }  // Fetch only completed orders
+//             status:  { $in: ['completed', 'rejected'] }   // Fetch only completed/rejected orders
 //         })
 //         .populate('userId', 'username email') // Populate user details
 //         .populate({

@@ -34,6 +34,24 @@ const foodItemSchema = new mongoose.Schema({
     required: false,
     default: 0
   },
+  reviews: [
+    {
+      rating: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 5
+      },
+      comment: {
+        type: String,
+        required: false
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
   category: {
     type: String,
     required: true,

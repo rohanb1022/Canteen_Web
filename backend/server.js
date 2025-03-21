@@ -33,8 +33,7 @@ import updateStatus from './routes/orderRoutes.js';
 import { getOrderStatus } from './controllers/orderStatus.controller.js';
 import getOrderStatusRoutes from './routes/App/getOrderStatus.route.js'
 import ContactUs from './routes/App/ContactUs.route.js';
-
-
+import Review from './routes/App/Review.route.js';
 // Test routes
 import orderRoutes from './routes/test/order.route.js';
 import userRoutes from './routes/test/user.route.js';
@@ -89,6 +88,7 @@ app.use('/app/api/forgotpassword', forgotpass);
 app.use('/app/api/resetpassword', resetpass);
 app.use('/app/api/v1', getOrderStatusRoutes);  // Mount the route correctly
 app.use('/app/api/v1', ContactUs);
+app.use('/app/api/v1', Review);
 
 
 //website routes

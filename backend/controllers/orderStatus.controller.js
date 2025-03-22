@@ -48,24 +48,42 @@ export const updateOrderStatus = async (req, res) => {
   }
 };
 
-export const removePerticularDish = async (req , res) => {
+export const removePerticularDish = async (req, res) => {
   try {
-    const {orderId , foodItemId} = req.body; // pass only that foodItemId which has to be remove
-    
-    // pull basically helps to remove the item from the array  |     new : true helps to return the updated document
-    const order = await Order.findByIdAndUpdate(orderId  ,  {$pull : {foodItems : {foodItemId : foodItemId}} } , {new : true});
+    const { orderId, foodName } = req.body; // Accept foodName from frontend
 
-    // if order is not found
-    if(!order){
-      return res.status(404).json({message : "Order not found"})
+    // Find the order
+    const order = await Order.findById(orderId).populate("foodItems.foodItemId");
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
     }
 
-    return res.status(200).json({message : "Dish removed successfully" , order})
+    // Find the correct foodItemId for the given foodName
+    const foodItem = order.foodItems.find(
+      (item) => item.foodItemId.name === foodName
+    );
+
+    if (!foodItem) {
+      return res.status(404).json({ message: "Food item not found in order" });
+    }
+
+    // Remove the item using `$pull`
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { $pull: { foodItems: { foodItemId: foodItem.foodItemId._id } } },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      message: "Dish removed successfully",
+      order: updatedOrder,
+    });
   } catch (error) {
-    console.log(error.message)
-    return res.status(500).json({message : "Server error"})
+    console.error("Error removing dish:", error);
+    return res.status(500).json({ message: "Server error", error: error.message });
   }
-}
+};
 
 export const getOrderStatus = async (req, res) => {
   try {
@@ -121,13 +139,3 @@ export const getOrderByUserId = async(req, res) => {
     res.status(500).json({ message: "Internal server error" });
 }
 }
-
-// const { userId } = req.params;
-
-// // Find all pending orders for the user and sort them by createdAt (ascending)
-// const pendingOrders = orders
-//     .filter((o) => o.userId === userId && o.status === "pending")
-//     .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)); // Sort by createdAt
-
-// return res.json({ hasOrder: pendingOrders.length > 0, orders: pendingOrders });
-// };

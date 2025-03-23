@@ -64,7 +64,11 @@ const foodItemSchema = new mongoose.Schema({
       price : {
         type : Number
       },
-    }
+    },
+time:{
+    type:String,
+    required:false
+  }
 });
 
 export const FoodItem = mongoose.model('FoodItem', foodItemSchema);

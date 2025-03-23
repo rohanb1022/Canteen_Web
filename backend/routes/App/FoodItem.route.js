@@ -7,7 +7,7 @@ const router = express.Router();
 // Get all food items with specific fields
 router.get('/fooditem', async (req, res) => {
   try {
-    const foodItems = await FoodItem.find({ availability: true },'img rating name category price');
+    const foodItems = await FoodItem.find({ availability: true },'img rating name category price time');
     
     res.status(200).json({
       success: true,
@@ -26,7 +26,7 @@ router.get('/fooditem', async (req, res) => {
 // Get individual food item details
 router.get('/fooditem/:id',protectRoute ,  async (req, res) => {
   try {
-    const foodItem = await FoodItem.findById(req.params.id, 'img price rating name description');
+    const foodItem = await FoodItem.findById(req.params.id, 'img price rating name description time');
     if (!foodItem) return res.status(404).json({ message: 'Food item not found' });
     res.json(foodItem);
     console.log("data sent: ",foodItem);

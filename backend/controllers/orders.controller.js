@@ -21,8 +21,7 @@ export const getOrderCards = async (req, res) => {
       items: order.foodItems.map(item => ({
         foodName: item.foodItemId ? item.foodItemId.name : 'Unknown',
         quantity: item.quantity,
-        price: item.price,
-        status:item.status
+        price: item.price
       }))
     }));
 
@@ -47,4 +46,3 @@ export const getPreparedOrders = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-

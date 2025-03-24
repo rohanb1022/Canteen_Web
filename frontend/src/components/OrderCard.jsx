@@ -74,7 +74,11 @@ function OrderCard({ order, onUpdateStatus, onRemoveItem }) {
 
               return (
                 <li key={index} className="text-gray-700 text-xl font-bold flex justify-between">
-                  {item.foodName} (x{item.quantity})
+                  {item.foodName} (x{item.quantity})  {item.status === "rejected" ? (
+    <span className="text-red-500 font-semibold"> ({item.status})</span>
+  ) : item.status === "accepted" ? (
+    <span className="text-green-500 font-semibold"> ({item.status})</span>
+  ) : null}
 
                   {/* Remove button is only shown when `isRemovable` is true */}
                   {isRemovable && (

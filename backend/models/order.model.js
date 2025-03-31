@@ -14,10 +14,7 @@ const orderSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['pending', 'completed', 'accepted', 'rejected', 'prepared'], 
-    default: 'pending',
-    paymentId : [{
-      type : String
-    }]
+    default: 'pending'
   },
   orderDate: { type: Date, default: Date.now },
   paymentId: {type:String , required : true},

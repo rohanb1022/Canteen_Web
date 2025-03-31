@@ -1,6 +1,6 @@
 import axios from "axios"
 
 export const axiosInstance = axios.create({
-    baseURL :  "https://canteen-web-1.onrender.com" ,
+    baseURL :  "http://localhost:5000" ,
     withCredentials : true
 })

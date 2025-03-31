@@ -7,6 +7,7 @@ const orderSchema = new mongoose.Schema({
       foodItemId: { type: mongoose.Schema.Types.ObjectId, ref: 'FoodItem', required: true },
       quantity: { type: Number, required: true },
       price: { type: Number, required: true },
+      status: { type: String, enum: ['accepted', 'rejected'], default: 'pending' }
     },
   ],
   totalAmount: { type: Number, required: true },

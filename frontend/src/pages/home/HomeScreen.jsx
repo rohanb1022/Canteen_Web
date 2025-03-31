@@ -177,8 +177,6 @@ function HomeScreen() {
             <option value="pending">Pending</option>
             <option value="accepted">Accepted</option>
             <option value="prepared">Prepared</option>
-            <option value="completed">Completed</option>
-            <option value="rejected">Rejected</option>
           </select>
         </div>
 

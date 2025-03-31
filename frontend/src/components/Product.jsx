@@ -298,7 +298,7 @@ const Product = ({ product, toggleAvailability, removeProduct }) => {
       <div className="mt-4 flex justify-between gap-2">
         <button
           onClick={updateAvailability}
-          className={`px-4 py-2 rounded-lg ${
+          className={`px-3 py-2 rounded-lg ${
             isAvailable ? "bg-green-500" : "bg-red-500"
           } ${isLoading ? "cursor-not-allowed opacity-50" : ""}`}
           disabled={isLoading}
@@ -313,7 +313,7 @@ const Product = ({ product, toggleAvailability, removeProduct }) => {
         </button>
         <button
           onClick={handleRemove}
-          className={`px-4 py-2 rounded-lg bg-red-600 text-white ${
+          className={`px-2 py-2 rounded-lg bg-red-600 text-white ${
             isLoading ? "cursor-not-allowed opacity-50" : "hover:bg-red-700"
           }`}
           disabled={isLoading}

@@ -14,7 +14,7 @@ export const getOrderCards = async (req, res) => {
         path: 'foodItems.foodItemId',
         select: 'name price' // Populate food item details
       })
-      .sort({ createdAt: -1 }); // Sort by creation date
+      .sort({ orderDate: -1 }); // Sort by creation date
 
     // Map over the fetched orders to structure data for cards
     const orderCards = orders.map(order => ({

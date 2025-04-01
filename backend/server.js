@@ -47,7 +47,7 @@ const __dirname = path.resolve();
 // Configure CORS with proper settings
 app.use(cors({
   origin: (origin, callback) => {
-    const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:8081','https://vesitbite-five.vercel.app/', '*']; // Add specific origins and '*'
+    const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:8081','https://vesitbite-one.vercel.app']; // Add specific origins and '*'
     
     if (!origin || allowedOrigins.includes(origin) || origin === '*') {
       callback(null, true);

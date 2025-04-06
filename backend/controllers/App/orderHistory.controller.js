@@ -38,7 +38,8 @@ export const getOrderHistory = async (req, res) => {
             items: order.foodItems.map(item => ({
                 foodName: item.foodItemId ? item.foodItemId.name : 'Unknown',
                 quantity: item.quantity,
-                price: item.price
+                price: item.price,
+                status:item.status
             }))
         }));
 

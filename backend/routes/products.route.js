@@ -19,7 +19,8 @@ import {
   updateProductAvailability, 
   getFoodItemById, 
   makeSpecialDish, 
-  removeFoodItem // Add this
+  removeFoodItem,// Add this
+  changePrice
 } from '../controllers/products.controller.js';
 import protectRoute from '../middleware/protectRoute.js';
 
@@ -31,5 +32,6 @@ router.post('/addDish', protectRoute, addFoodItem); // Route for adding a dish
 router.get('/products/:id', getFoodItemById); // Route to get a single food item
 router.put('/products/:id', protectRoute, makeSpecialDish); // Route to make a dish special
 router.delete('/products/:id', protectRoute, removeFoodItem); // Change to this
+router.put("/changePrice/:dishId" , protectRoute, changePrice); // route for changing price of dish from products page
 
 export default router;

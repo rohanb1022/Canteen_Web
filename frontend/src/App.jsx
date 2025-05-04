@@ -28,7 +28,6 @@ const App = () => {
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/specialdish" element={<AddDishPopup />} />
           <Route path="/prepared-orders" element={<OrdersDisplay />} />
-
         </Routes>
       </div>
     </>

@@ -25,13 +25,11 @@ const AddDishPopup = ({ onClose, onDishAdded }) => { // Use onDishAdded to updat
         setCategory('special');
         onClose();
       } else {
-        toast.error('Failed to add special dish.');
+        toast.error('Failed to add dish.');
       }
     } catch (error) {
       console.error('Error adding dish:', error);
-      alert('Server error! Try again later.');
     }
-    
     setLoading(false);
   };
 
